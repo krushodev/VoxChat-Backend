@@ -1,9 +1,13 @@
 {
   "name": "voxtalk-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.ts",
   "author": "Ignacio Kruchowski",
   "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon src/index.ts"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
