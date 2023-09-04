@@ -1,5 +1,4 @@
 import AppExpress from "../application/appExpress";
-import IApplication from "../application/interfaces/appInterface";
 
 class AppFactory {
     public static create(appType = "AppExpress") {

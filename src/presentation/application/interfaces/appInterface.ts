@@ -1,7 +1,9 @@
+import { Server } from "http";
+
 interface IApplication {
     init: () => void;
     build: () => void;
-    listen: () => void;
+    listen: () => Server;
 }
 
 export default IApplication;
