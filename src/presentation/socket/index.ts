@@ -1,5 +1,6 @@
 import { Server as ServerType } from "http";
 import { Server } from "socket.io";
+import { IMessage } from "./interfaces/socketInterfaces";
 
 const createSocketServer = (server: ServerType) => {
     const socketServer = new Server(server!, {
@@ -9,8 +10,8 @@ const createSocketServer = (server: ServerType) => {
     });
 
     socketServer.on("connection", (socket) => {
-        socket.on("sendMessage", data => {
-            socket.emit("newMessage", data);
+        socket.on("sendMessage", (data: IMessage) => {
+            socket.broadcast.emit("receiveMessages", data);
         });
     });
 
