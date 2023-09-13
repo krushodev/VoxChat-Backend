@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import RoomManager from "../../domain/managers/RoomManager";
+import RoomManager from "../../domain/managers/roomManager";
 
 class RoomsController {
     public static async list(req: Request, res: Response) {

@@ -1,9 +1,9 @@
 import { createContainer, asClass } from "awilix";
 
-import RoomRespository from "./data/repositores/roomRepository";
+import RoomMongooseRespository from "./data/repositores/roomMongooseRepository";
 
 const container = createContainer();
 
-container.register("RoomRepository", asClass(RoomRespository).singleton());
+container.register("RoomRepository", asClass(RoomMongooseRespository).singleton());
 
 export default container;
