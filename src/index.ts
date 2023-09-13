@@ -3,9 +3,11 @@ import { Server } from "http";
 
 import DbFactory from "./data/factories/dbFactory";
 import AppFactory from "./presentation/factories/appFactory";
-import IApplication from "./presentation/application/interfaces/appInterface";
-import createSocketServer from "./presentation/socket";
+
 import IAdapter from "./data/adapters/interfaces/adapterInterface";
+import IApplication from "./presentation/application/interfaces/appInterface";
+
+import createSocketServer from "./presentation/socket";
 
 dotenv.config();
 
