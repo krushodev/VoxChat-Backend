@@ -12,13 +12,13 @@ import createSocketServer from "./presentation/socket";
 dotenv.config();
 
 void (async () => {
-    const db: IAdapter = DbFactory.create(process.env.DB_ADAPTER);
-    db.init(process.env.DB_URI!);
+  const db: IAdapter = DbFactory.create(process.env.DB_ADAPTER);
+  db.init(process.env.DB_URI!);
 
-    const app: IApplication = AppFactory.create(process.env.NODE_APPLICATION);
-    app.init();
-    app.build();
-    const httpServer: Server = app.listen();
+  const app: IApplication = AppFactory.create(process.env.NODE_APPLICATION);
+  app.init();
+  app.build();
+  const httpServer: Server = app.listen();
 
-    createSocketServer(httpServer); 
+  createSocketServer(httpServer);
 })();

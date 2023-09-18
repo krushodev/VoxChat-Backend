@@ -1,8 +1,8 @@
 interface Room {
-    id: string,
-    name: string,
-    tags: string[],
-    participants: string[]
+  id: string;
+  name: string;
+  topics: string[];
+  participants: string[];
 }
 
 export default Room;
