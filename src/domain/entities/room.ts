@@ -2,7 +2,7 @@ interface Room {
   id: string;
   name: string;
   topics: string[];
-  participants: string[];
+  members: string[];
 }
 
 export default Room;

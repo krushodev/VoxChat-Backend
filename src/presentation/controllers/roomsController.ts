@@ -1,13 +1,13 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import RoomManager from "../../domain/managers/roomManager";
+import RoomManager from '../../domain/managers/roomManager';
 
 class RoomsController {
   public static async list(req: Request, res: Response) {
     try {
       const manager = new RoomManager();
       const result = await manager.list();
-      res.status(200).send({ status: "success", data: result });
+      res.status(200).send({ status: 'success', data: result });
     } catch (err) {
       console.log(err);
     }
@@ -18,7 +18,7 @@ class RoomsController {
       const { id } = req.params;
       const manager = new RoomManager();
       const result = await manager.getOne(id);
-      res.status(200).send({ status: "success", data: result });
+      res.status(200).send({ status: 'success', data: result });
     } catch (err) {
       console.log(err);
     }
@@ -28,7 +28,7 @@ class RoomsController {
     try {
       const manager = new RoomManager();
       const result = await manager.createOne(req.body);
-      res.status(201).send({ status: "success", data: result });
+      res.status(201).send({ status: 'success', data: result });
     } catch (err) {
       console.log(err);
     }

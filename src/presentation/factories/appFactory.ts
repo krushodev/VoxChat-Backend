@@ -1,9 +1,9 @@
-import AppExpress from "../application/appExpress";
+import AppExpress from '../application/appExpress';
 
 class AppFactory {
-  public static create(appType = "AppExpress") {
+  public static create(appType = 'AppExpress') {
     const apps = new Map();
-    apps.set("AppExpress", AppExpress);
+    apps.set('AppExpress', AppExpress);
 
     const app = apps.get(appType);
     return new app();

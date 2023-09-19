@@ -1,16 +1,16 @@
-import RoomModel from "../models/roomModel";
-import IRoomRepository from "./interfaces/roomRepositoryInterface";
+import RoomModel from '../models/roomModel';
+import IRoomRepository from './interfaces/roomRepositoryInterface';
 
 class RoomMongooseRespository implements IRoomRepository {
   public async list() {
     const roomsDocs = await RoomModel.find();
 
     return roomsDocs.length > 0
-      ? roomsDocs.map((roomDoc) => ({
+      ? roomsDocs.map(roomDoc => ({
           id: roomDoc._id,
           name: roomDoc.name,
           topics: roomDoc.topics,
-          participants: roomDoc.participants,
+          members: roomDoc.members
         }))
       : null;
   }
@@ -23,12 +23,12 @@ class RoomMongooseRespository implements IRoomRepository {
           id: roomDoc._id,
           name: roomDoc.name,
           topics: roomDoc.topics,
-          participants: roomDoc.participants,
+          members: roomDoc.members
         }
       : null;
   }
 
-  public async saveOne(data: { name: string; tags: string[]; participants: string[] }) {
+  public async saveOne(data: { name: string; topics: string[]; members: string[] }) {
     const newRoomDoc = new RoomModel(data);
     const roomDoc = await newRoomDoc.save();
 
@@ -37,7 +37,7 @@ class RoomMongooseRespository implements IRoomRepository {
           id: roomDoc._id,
           name: roomDoc.name,
           topics: roomDoc.topics,
-          participants: roomDoc.participants,
+          members: roomDoc.members
         }
       : null;
   }

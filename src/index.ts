@@ -1,13 +1,13 @@
-import dotenv from "dotenv";
-import { Server } from "http";
+import dotenv from 'dotenv';
+import { Server } from 'http';
 
-import DbFactory from "./data/factories/dbFactory";
-import AppFactory from "./presentation/factories/appFactory";
+import DbFactory from './data/factories/dbFactory';
+import AppFactory from './presentation/factories/appFactory';
 
-import IAdapter from "./data/adapters/interfaces/adapterInterface";
-import IApplication from "./presentation/application/interfaces/appInterface";
+import IAdapter from './data/adapters/interfaces/adapterInterface';
+import IApplication from './presentation/application/interfaces/appInterface';
 
-import createSocketServer from "./presentation/socket";
+import createSocketServer from './presentation/socket';
 
 dotenv.config();
 
