@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import IApplication from './interfaces/appInterface';
+import roomsRouter from '../routes/roomsRouter';
 
 class AppExpress implements IApplication {
   private app = express();
@@ -16,7 +17,9 @@ class AppExpress implements IApplication {
     });
   }
 
-  build() {}
+  build() {
+    this.app.use('/api/rooms', roomsRouter);
+  }
 
   listen() {
     return this.app.listen(this.PORT, () => {

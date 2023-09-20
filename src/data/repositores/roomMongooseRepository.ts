@@ -1,5 +1,7 @@
 import RoomModel from '../models/roomModel';
-import IRoomRepository from './interfaces/roomRepositoryInterface';
+
+import type { RoomProps } from '../../types';
+import type IRoomRepository from './interfaces/roomRepositoryInterface';
 
 class RoomMongooseRespository implements IRoomRepository {
   public async list() {
@@ -10,7 +12,19 @@ class RoomMongooseRespository implements IRoomRepository {
           id: roomDoc._id,
           name: roomDoc.name,
           topics: roomDoc.topics,
-          members: roomDoc.members
+          members: roomDoc.members,
+          messages: roomDoc.messages.map(message => ({
+            id: message._id,
+            text: message.text,
+            user: {
+              id: message.user._id,
+              name: message.user.name,
+              image: message.user.image
+            },
+            date: message.date
+          })),
+          isPrivate: roomDoc.isPrivate,
+          password: roomDoc.password
         }))
       : null;
   }
@@ -23,12 +37,24 @@ class RoomMongooseRespository implements IRoomRepository {
           id: roomDoc._id,
           name: roomDoc.name,
           topics: roomDoc.topics,
-          members: roomDoc.members
+          members: roomDoc.members,
+          messages: roomDoc.messages.map(message => ({
+            id: message._id,
+            text: message.text,
+            user: {
+              id: message.user._id,
+              name: message.user.name,
+              image: message.user.image
+            },
+            date: message.date
+          })),
+          isPrivate: roomDoc.isPrivate,
+          password: roomDoc.password
         }
       : null;
   }
 
-  public async saveOne(data: { name: string; topics: string[]; members: string[] }) {
+  public async saveOne(data: RoomProps) {
     const newRoomDoc = new RoomModel(data);
     const roomDoc = await newRoomDoc.save();
 
@@ -37,7 +63,19 @@ class RoomMongooseRespository implements IRoomRepository {
           id: roomDoc._id,
           name: roomDoc.name,
           topics: roomDoc.topics,
-          members: roomDoc.members
+          members: roomDoc.members,
+          messages: roomDoc.messages.map(message => ({
+            id: message._id,
+            text: message.text,
+            user: {
+              id: message.user._id,
+              name: message.user.name,
+              image: message.user.image
+            },
+            date: message.date
+          })),
+          isPrivate: roomDoc.isPrivate,
+          password: roomDoc.password
         }
       : null;
   }

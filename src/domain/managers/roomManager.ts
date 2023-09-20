@@ -1,6 +1,8 @@
 import container from '../../container';
 import IRoomRepository from '../../data/repositores/interfaces/roomRepositoryInterface';
-import IRoomManager from './interfaces/roomManagerInterface';
+
+import type { RoomProps } from '../../types';
+import type IRoomManager from './interfaces/roomManagerInterface';
 
 class RoomManager implements IRoomManager {
   private RoomRepository: IRoomRepository = container.resolve('RoomRepository');
@@ -21,7 +23,7 @@ class RoomManager implements IRoomManager {
     return room;
   }
 
-  public async createOne(data: { name: string; topics: string[]; members: string[] }) {
+  public async createOne(data: RoomProps) {
     const room = await this.RoomRepository.saveOne(data);
 
     if (!room) throw new Error('Room not found');

@@ -1,8 +1,9 @@
-import Room from '../../entities/room';
+import type { RoomProps } from '../../../types';
+import type Room from '../../entities/room';
 
 interface IRoomManager {
   list: () => Promise<Room[]>;
-  createOne: (data: { name: string; topics: string[]; members: string[] }) => Promise<Room>;
+  createOne: (data: RoomProps) => Promise<Room>;
   getOne: (id: string) => Promise<Room>;
 }
 

@@ -10,6 +10,7 @@ class RoomsController {
       res.status(200).send({ status: 'success', data: result });
     } catch (err) {
       console.log(err);
+      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
     }
   }
 
@@ -21,6 +22,7 @@ class RoomsController {
       res.status(200).send({ status: 'success', data: result });
     } catch (err) {
       console.log(err);
+      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
     }
   }
 
@@ -31,6 +33,7 @@ class RoomsController {
       res.status(201).send({ status: 'success', data: result });
     } catch (err) {
       console.log(err);
+      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
     }
   }
 }

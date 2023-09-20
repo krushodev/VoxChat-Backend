@@ -1,6 +1,6 @@
 import { Server as ServerType } from 'http';
 import { Server } from 'socket.io';
-import { IMessage } from './interfaces/socketInterfaces';
+import type { IMessage } from '../../types';
 
 const createSocketServer = (server: ServerType) => {
   const socketServer = new Server(server!, {
