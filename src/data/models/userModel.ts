@@ -6,17 +6,19 @@ const usersCollection = 'users';
 const userSchema = new Schema({
   _id: {
     type: Schema.Types.String,
-    default: randomUUID,
-    index: true
+    default: randomUUID
   },
   firstName: {
-    type: Schema.Types.String
+    type: Schema.Types.String,
+    required: true
   },
   lastName: {
-    type: Schema.Types.String
+    type: Schema.Types.String,
+    required: true
   },
   email: {
-    type: Schema.Types.String
+    type: Schema.Types.String,
+    required: true
   }
 });
 

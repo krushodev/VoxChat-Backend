@@ -12,6 +12,12 @@ export type RoomProps = {
   password?: string;
 };
 
+export type UserProps = {
+  firstName: string;
+  lastName: string[];
+  gmail: string;
+};
+
 export interface IMessage {
   id: string;
   text: string;
