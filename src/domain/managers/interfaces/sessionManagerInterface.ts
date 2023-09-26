@@ -1,6 +1,9 @@
+import type User from '../../entities/user';
+import type { UserLoginProps } from '../../../types';
+
 interface ISessionManager {
-  login: (data: { email: string; password: string }) => Promise<{ accessToken: string; refreshToken: string }>;
-  signup: (data: { username: string; email: string; password: string }) => Promise<boolean>;
+  login: (data: UserLoginProps) => Promise<{ accessToken: string; refreshToken: string }>;
+  signup: (data: User) => Promise<boolean>;
   resolveRefreshToken: (data: string) => Promise<string>;
 }
 

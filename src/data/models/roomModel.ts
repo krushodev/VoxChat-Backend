@@ -17,45 +17,37 @@ const roomSchema = new Schema({
       type: Schema.Types.String
     }
   ],
-  messages: {
-    type: [
-      {
-        _id: {
-          type: Schema.Types.String,
-          default: randomUUID
-        },
-        text: {
-          type: Schema.Types.String,
-          required: true
-        },
-        user: {
-          type: {
-            _id: {
-              type: Schema.Types.String,
-              default: randomUUID
-            },
-            name: {
-              type: Schema.Types.String,
-              required: true
-            },
-            image: {
-              type: Schema.Types.String,
-              required: true
-            }
-          },
-          required: true
-        },
-        date: {
-          type: Schema.Types.Date,
-          required: true
-        }
+  messages: [
+    {
+      _id: {
+        type: Schema.Types.String,
+        default: randomUUID
+      },
+      text: {
+        type: Schema.Types.String,
+        required: true
+      },
+      user: {
+        type: Schema.Types.String,
+        index: true,
+        ref: 'users',
+        required: true
+      },
+      date: {
+        type: Schema.Types.Date,
+        required: true
       }
-    ]
-  },
+    }
+  ],
   members: [
     {
-      type: Schema.Types.String,
-      required: true
+      user: {
+        type: Schema.Types.String,
+        index: true,
+        ref: 'users',
+        default: null,
+        required: true
+      }
     }
   ],
   isPrivate: {
@@ -66,6 +58,16 @@ const roomSchema = new Schema({
     type: Schema.Types.String,
     default: null
   }
+});
+
+roomSchema.pre('find', function () {
+  this.populate('messages.user');
+  this.populate('members.user');
+});
+
+roomSchema.pre('findOne', function () {
+  this.populate('messages.user');
+  this.populate('members.user');
 });
 
 export default model(roomsCollection, roomSchema);

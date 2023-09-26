@@ -2,10 +2,12 @@ import jwt from 'jsonwebtoken';
 
 import container from '../../container';
 
-import IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
-import ISessionManager from './interfaces/sessionManagerInterface';
-
 import { generateAccessToken, generateHash, generateRefreshToken, validateHash } from '../../shared';
+
+import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
+import type ISessionManager from './interfaces/sessionManagerInterface';
+import type { ResponseJWT } from '../../types';
+import type User from '../entities/user';
 
 class SessionManager implements ISessionManager {
   private userRepository: IUserRepository = container.resolve('UserRepository');
@@ -25,7 +27,7 @@ class SessionManager implements ISessionManager {
     return { accessToken, refreshToken };
   }
 
-  public async signup(data: { username: string; email: string; password: string }) {
+  public async signup(data: User) {
     const userExists = await this.userRepository.findOneByEmail(data.email);
 
     if (userExists) throw new Error('User already exists');

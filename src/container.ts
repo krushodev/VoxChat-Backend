@@ -1,7 +1,7 @@
 import { createContainer, asClass } from 'awilix';
 
 import RoomMongooseRespository from './data/repositores/roomMongooseRepository';
-import UserMongooseRespository from './data/repositores/userMongooseRespository';
+import UserMongooseRespository from './data/repositores/userMongooseRepository';
 
 const container = createContainer();
 

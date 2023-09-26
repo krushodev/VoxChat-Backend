@@ -1,9 +1,12 @@
 import container from '../../container';
 
-import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
-import type { UserProps } from '../../types';
+import { generateHash } from '../../shared';
 
-class UserManager {
+import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
+import type User from '../entities/user';
+import type IUserManager from './interfaces/userManagerInterface';
+
+class UserManager implements IUserManager {
   private UserRepository: IUserRepository = container.resolve('UserRepository');
 
   public async list() {
@@ -22,8 +25,10 @@ class UserManager {
     return user;
   }
 
-  public async createOne(data: UserProps) {
-    const user = await this.UserRepository.saveOne(data);
+  public async createOne(data: User) {
+    const hashedPassword = await generateHash(data.password);
+
+    const user = await this.UserRepository.saveOne({ ...data, password: hashedPassword });
 
     if (!user) throw new Error('User not found');
 

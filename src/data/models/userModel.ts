@@ -8,15 +8,15 @@ const userSchema = new Schema({
     type: Schema.Types.String,
     default: randomUUID
   },
-  firstName: {
-    type: Schema.Types.String,
-    required: true
-  },
-  lastName: {
+  username: {
     type: Schema.Types.String,
     required: true
   },
   email: {
+    type: Schema.Types.String,
+    required: true
+  },
+  password: {
     type: Schema.Types.String,
     required: true
   }

@@ -1,45 +1,22 @@
-export type RoomProps = {
-  name: string;
-  topics: string[];
-  members: string[];
-  messages: [
-    {
-      text: string;
-      user: string;
-    }
-  ];
-  isPrivate?: boolean;
-  password?: string;
-};
-
-export type UserProps = {
-  firstName: string;
-  lastName: string[];
-  gmail: string;
-};
+import type { Request } from 'express';
+import type User from './domain/entities/user';
 
 export interface IMessage {
   id: string;
   text: string;
-  user: {
-    id: string;
-    name: string;
-    image: string;
-  };
+  user: User | string;
   date: Date;
 }
 
-export interface UserBody {
-  id: string;
-  username: string;
-  email: string;
-  password: undefined;
-}
-
 export interface RequestWithUser extends Request {
-  user?: UserBody;
+  user?: User;
 }
 
 export interface ResponseJWT {
-  user: UserBody;
+  user: User;
+}
+
+export interface UserLoginProps {
+  email: string;
+  password: string;
 }

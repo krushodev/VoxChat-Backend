@@ -1,6 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
-import SessionManager from '../../domain/managers/sessionManager/sessionManager';
+import SessionManager from '../../domain/managers/sessionManager';
+import { RequestWithUser } from '../../types';
 
 class SessionController {
   public static async login(req: Request, res: Response) {
@@ -25,7 +26,7 @@ class SessionController {
     }
   }
 
-  public static async private(req: Request, res: Response) {
+  public static async private(req: RequestWithUser, res: Response) {
     try {
       const { user } = req;
       res.status(200).send({ status: 'success', payload: user });
