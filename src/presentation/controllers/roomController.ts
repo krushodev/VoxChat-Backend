@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import RoomManager from '../../domain/managers/roomManager';
 
-class RoomsController {
+class RoomController {
   public static async list(req: Request, res: Response) {
     try {
       const manager = new RoomManager();
@@ -38,4 +38,4 @@ class RoomsController {
   }
 }
 
-export default RoomsController;
+export default RoomController;

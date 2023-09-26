@@ -4,6 +4,7 @@ import type { UserProps } from '../../../types';
 interface IUserRepository {
   list: () => Promise<User[] | null>;
   findOne: (id: string) => Promise<User | null>;
+  findOneByEmail: (data: string) => Promise<User | null>;
   saveOne: (data: UserProps) => Promise<User | null>;
 }
 

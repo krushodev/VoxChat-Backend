@@ -30,6 +30,19 @@ class UserMongooseRespository implements IUserRepository {
       : null;
   }
 
+  public async findOneByEmail(data: string) {
+    const userDoc = await UserModel.findOne({ email: data });
+
+    return userDoc
+      ? {
+          id: userDoc._id,
+          firstName: userDoc.firstName,
+          lastName: userDoc.lastName,
+          email: userDoc.email
+        }
+      : null;
+  }
+
   public async saveOne(data: UserProps) {
     const newUserDoc = new UserModel(data);
     const userDoc = await newUserDoc.save();

@@ -1,7 +1,11 @@
 import express from 'express';
 import cors from 'cors';
+
+import roomRouter from '../routes/roomRouter';
+import sessionRouter from '../routes/sessionRouter';
+import userRouter from '../routes/userRouter';
+
 import IApplication from './interfaces/appInterface';
-import roomsRouter from '../routes/roomsRouter';
 
 class AppExpress implements IApplication {
   private app = express();
@@ -18,7 +22,9 @@ class AppExpress implements IApplication {
   }
 
   build() {
-    this.app.use('/api/rooms', roomsRouter);
+    this.app.use('/api/sessions', sessionRouter);
+    this.app.use('/api/rooms', roomRouter);
+    this.app.use('/api/users', userRouter);
   }
 
   listen() {
