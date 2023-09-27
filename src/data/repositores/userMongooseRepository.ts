@@ -1,4 +1,5 @@
 import { User } from '../../domain/entities/user';
+import { UserBodyPayload, UserBodyUpdatePayload } from '../../shared/types/user';
 import UserModel from '../models/userModel';
 
 import type IUserRepository from './interfaces/userRepositoryInterface';

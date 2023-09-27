@@ -41,7 +41,7 @@ class UserController {
     try {
       const { id } = req.params;
       const manager = new UserManager();
-      const result = await manager.updateOne({ id, ...req.body });
+      const result = await manager.updateOne({ id, update: req.body });
       res.status(200).send({ status: 'success', data: result, message: 'User updated successfully' });
     } catch (err) {
       console.log(err);

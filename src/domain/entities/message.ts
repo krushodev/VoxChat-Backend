@@ -1,4 +1,4 @@
-import type { User, UserProps } from './user';
+import type { User } from './user';
 
 export interface MessageProps {
   id: string;
@@ -9,9 +9,9 @@ export interface MessageProps {
 
 export class Message {
   public id: string;
-  private text: string;
-  private user: User | null;
-  private date: Date;
+  public text: string;
+  public user: User | null;
+  public date: Date;
 
   constructor(props: MessageProps) {
     this.id = props.id;

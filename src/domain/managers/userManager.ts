@@ -4,6 +4,10 @@ import { generateHash } from '../../shared';
 
 import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
 import type IUserManager from './interfaces/userManagerInterface';
+import { UserBodyPayload, UserBodyUpdatePayload } from '../../shared/types/user';
+import idSchema from '../validations/shared/idValidation';
+import userBodySchema from '../validations/user/userBodyValidation';
+import userBodyUpdateSchema from '../validations/user/userBodyUpdateValidation';
 
 class UserManager implements IUserManager {
   private UserRepository: IUserRepository = container.resolve('UserRepository');
@@ -17,7 +21,9 @@ class UserManager implements IUserManager {
   }
 
   public async getOne(id: string) {
-    const user = await this.UserRepository.findOne(id);
+    const uid = await idSchema.parseAsync(id);
+
+    const user = await this.UserRepository.findOne(uid);
 
     if (!user) throw new Error('User not found');
 
@@ -25,9 +31,11 @@ class UserManager implements IUserManager {
   }
 
   public async createOne(data: UserBodyPayload) {
-    const hashedPassword = await generateHash(data.password!);
+    const dataValidated = await userBodySchema.parseAsync(data);
 
-    const user = await this.UserRepository.saveOne({ ...data, password: hashedPassword });
+    const hashedPassword = await generateHash(dataValidated.password!);
+
+    const user = await this.UserRepository.saveOne({ ...dataValidated, password: hashedPassword });
 
     if (!user) throw new Error('User not found');
 
@@ -35,7 +43,9 @@ class UserManager implements IUserManager {
   }
 
   public async updateOne(data: UserBodyUpdatePayload) {
-    const user = await this.UserRepository.update({ id: data.id, update: data.update });
+    const { id, update } = await userBodyUpdateSchema.parseAsync(data);
+
+    const user = await this.UserRepository.update({ id, update });
 
     if (!user) throw new Error('User not found');
 
@@ -43,7 +53,9 @@ class UserManager implements IUserManager {
   }
 
   public async removeOne(id: string) {
-    const result = await this.UserRepository.remove(id);
+    const uid = await idSchema.parseAsync(id);
+
+    const result = await this.UserRepository.remove(uid);
 
     if (!result) throw new Error('User not found');
 

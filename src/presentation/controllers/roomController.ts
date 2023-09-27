@@ -41,7 +41,7 @@ class RoomController {
     try {
       const { id } = req.params;
       const manager = new RoomManager();
-      const result = await manager.updateOne({ id, ...req.body });
+      const result = await manager.updateOne({ id, update: req.body });
       res.status(200).send({ status: 'success', data: result, message: 'Room updated successfully' });
     } catch (err) {
       console.log(err);
@@ -61,17 +61,17 @@ class RoomController {
     }
   }
 
-  /* public static async sendMessage(req: Request, res: Response) {
+  public static async sendMessage(req: Request, res: Response) {
     try {
       const { id } = req.params;
       const manager = new RoomManager();
-      await manager.insertMessage({ id, data: req.body });
+      await manager.insertMessage({ id, message: req.body });
       res.status(200).send({ status: 'success', message: 'Message sended to the room successfully' });
     } catch (err) {
       console.log(err);
       res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
     }
-  } */
+  }
 }
 
 export default RoomController;

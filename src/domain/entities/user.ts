@@ -7,9 +7,9 @@ export interface UserProps {
 
 export class User {
   public id: string;
-  private username: string;
-  private email: string;
-  private password: string;
+  public username: string;
+  public email: string;
+  public password: string;
 
   constructor(props: UserProps) {
     this.id = props.id;

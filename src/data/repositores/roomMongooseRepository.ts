@@ -1,6 +1,7 @@
 import { Message } from '../../domain/entities/message';
 import { Room } from '../../domain/entities/room';
 import { User, type UserProps } from '../../domain/entities/user';
+import type { RoomBodyPayload, RoomBodyUpdatePayload } from '../../shared/types/room';
 import RoomModel from '../models/roomModel';
 
 import type IRoomRepository from './interfaces/roomRepositoryInterface';

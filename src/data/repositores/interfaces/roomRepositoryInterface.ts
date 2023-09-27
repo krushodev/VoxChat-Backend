@@ -1,4 +1,5 @@
 import { Room } from '../../../domain/entities/room';
+import { RoomBodyPayload, RoomBodyUpdatePayload } from '../../../shared/types/room';
 
 interface IRoomRepository {
   list: () => Promise<Room[] | null>;

@@ -7,7 +7,7 @@ import { generateAccessToken, generateHash, generateRefreshToken, validateHash }
 import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
 import type ISessionManager from './interfaces/sessionManagerInterface';
 import type { ResponseJWT } from '../../types';
-import type User from '../entities/user';
+import { User } from '../entities/user';
 
 class SessionManager implements ISessionManager {
   private userRepository: IUserRepository = container.resolve('UserRepository');

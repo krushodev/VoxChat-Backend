@@ -1,11 +1,11 @@
-/* import User from '../../../domain/entities/user';
-import { IMessage } from '../../../types'; */
+import { Message } from '../../../domain/entities/message';
+import { User } from '../../../domain/entities/user';
 
 interface RoomBodyPayload {
   id: string;
   name: string;
   topics: string[];
-  messages: IMessage[] | [];
+  messages: Message[] | [];
   members: {
     user: User | string;
   }[];
@@ -16,4 +16,9 @@ interface RoomBodyPayload {
 interface RoomBodyUpdatePayload {
   id: string;
   update: RoomBodyPayload;
+}
+
+interface MessageBodyPayload {
+  id: string;
+  message: Message;
 }

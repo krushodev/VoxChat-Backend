@@ -15,14 +15,14 @@ export interface RoomProps {
 
 export class Room {
   public id: string;
-  private name: string;
-  private topics: string[];
-  private messages: Message[];
-  private members: {
+  public name: string;
+  public topics: string[];
+  public messages: Message[];
+  public members: {
     user: User | null;
   }[];
-  private isPrivate: boolean;
-  private password: string | null;
+  public isPrivate: boolean;
+  public password: string | null;
 
   constructor(props: RoomProps) {
     this.id = props.id;
