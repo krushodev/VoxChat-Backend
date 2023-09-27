@@ -5,6 +5,8 @@ interface IUserRepository {
   findOne: (id: string) => Promise<User | null>;
   findOneByEmail: (data: string) => Promise<User | null>;
   saveOne: (data: User) => Promise<User | null>;
+  update: (data: User) => Promise<User | null>;
+  remove: (id: string) => Promise<Boolean | null>;
 }
 
 export default IUserRepository;

@@ -34,6 +34,22 @@ class UserManager implements IUserManager {
 
     return user;
   }
+
+  public async updateOne(data: User) {
+    const user = await this.UserRepository.update(data);
+
+    if (!user) throw new Error('User not found');
+
+    return user;
+  }
+
+  public async removeOne(id: string) {
+    const result = await this.UserRepository.remove(id);
+
+    if (!result) throw new Error('User not found');
+
+    return result;
+  }
 }
 
 export default UserManager;

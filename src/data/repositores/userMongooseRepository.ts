@@ -56,6 +56,27 @@ class UserMongooseRespository implements IUserRepository {
         }
       : null;
   }
+
+  public async update(data: User) {
+    const { id, ...rest } = data;
+
+    const userDoc = await UserModel.findByIdAndUpdate(id, rest, { new: true });
+
+    return userDoc
+      ? {
+          id: userDoc._id,
+          username: userDoc.username,
+          email: userDoc.email,
+          password: userDoc.password
+        }
+      : null;
+  }
+
+  public async remove(id: string) {
+    const userDoc = await UserModel.findByIdAndRemove(id);
+
+    return userDoc ? true : null;
+  }
 }
 
 export default UserMongooseRespository;
