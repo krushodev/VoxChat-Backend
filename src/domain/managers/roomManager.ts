@@ -1,6 +1,7 @@
 import container from '../../container';
 
 import type IRoomRepository from '../../data/repositores/interfaces/roomRepositoryInterface';
+import { IMessage } from '../../types';
 import type Room from '../entities/room';
 import type IRoomManager from './interfaces/roomManagerInterface';
 
@@ -23,7 +24,7 @@ class RoomManager implements IRoomManager {
     return room;
   }
 
-  public async createOne(data: Room) {
+  public async createOne(data: RoomBodyPayload) {
     const room = await this.RoomRepository.saveOne(data);
 
     if (!room) throw new Error('Room not found');
@@ -31,8 +32,8 @@ class RoomManager implements IRoomManager {
     return room;
   }
 
-  public async updateOne(data: Room) {
-    const room = await this.RoomRepository.update(data);
+  public async updateOne(data: RoomBodyUpdatePayload) {
+    const room = await this.RoomRepository.update({ id: data.id, update: data.update });
 
     if (!room) throw new Error('Room not found');
 
@@ -46,6 +47,10 @@ class RoomManager implements IRoomManager {
 
     return result;
   }
+
+  /* public async insertMessage(data: { id: string; data: IMessage }) {
+    const room = await this.RoomRepository.update({id, })
+  } */
 }
 
 export default RoomManager;

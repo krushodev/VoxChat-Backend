@@ -1,7 +1,6 @@
 import UserModel from '../models/userModel';
 
 import type IUserRepository from './interfaces/userRepositoryInterface';
-import type User from '../../domain/entities/user';
 
 class UserMongooseRespository implements IUserRepository {
   public async list() {
@@ -43,7 +42,7 @@ class UserMongooseRespository implements IUserRepository {
       : null;
   }
 
-  public async saveOne(data: User) {
+  public async saveOne(data: UserBodyPayload) {
     const newUserDoc = new UserModel(data);
     const userDoc = await newUserDoc.save();
 
@@ -57,10 +56,10 @@ class UserMongooseRespository implements IUserRepository {
       : null;
   }
 
-  public async update(data: User) {
-    const { id, ...rest } = data;
+  public async update(data: UserBodyUpdatePayload) {
+    const { id, update } = data;
 
-    const userDoc = await UserModel.findByIdAndUpdate(id, rest, { new: true });
+    const userDoc = await UserModel.findByIdAndUpdate(id, update, { new: true });
 
     return userDoc
       ? {

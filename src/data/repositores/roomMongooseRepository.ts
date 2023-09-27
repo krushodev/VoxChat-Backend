@@ -74,10 +74,10 @@ class RoomMongooseRespository implements IRoomRepository {
       : null;
   }
 
-  public async update(data: Room) {
-    const { id, ...rest } = data;
+  public async update(data: RoomBodyUpdatePayload) {
+    const { id, update } = data;
 
-    const roomDoc = await RoomModel.findByIdAndUpdate(id, rest, { new: true });
+    const roomDoc = await RoomModel.findByIdAndUpdate(id, update, { new: true });
 
     return roomDoc
       ? {

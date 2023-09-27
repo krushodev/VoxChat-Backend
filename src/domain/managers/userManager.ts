@@ -3,7 +3,6 @@ import container from '../../container';
 import { generateHash } from '../../shared';
 
 import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
-import type User from '../entities/user';
 import type IUserManager from './interfaces/userManagerInterface';
 
 class UserManager implements IUserManager {
@@ -25,8 +24,8 @@ class UserManager implements IUserManager {
     return user;
   }
 
-  public async createOne(data: User) {
-    const hashedPassword = await generateHash(data.password);
+  public async createOne(data: UserBodyPayload) {
+    const hashedPassword = await generateHash(data.password!);
 
     const user = await this.UserRepository.saveOne({ ...data, password: hashedPassword });
 
@@ -35,8 +34,8 @@ class UserManager implements IUserManager {
     return user;
   }
 
-  public async updateOne(data: User) {
-    const user = await this.UserRepository.update(data);
+  public async updateOne(data: UserBodyUpdatePayload) {
+    const user = await this.UserRepository.update({ id: data.id, update: data.update });
 
     if (!user) throw new Error('User not found');
 
