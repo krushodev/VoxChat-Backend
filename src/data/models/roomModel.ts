@@ -31,22 +31,25 @@ const roomSchema = new Schema({
         type: Schema.Types.String,
         index: true,
         ref: 'users',
-        required: true
+        default: null
       },
       date: {
         type: Schema.Types.Date,
-        required: true
+        default: Date.now()
       }
     }
   ],
   members: [
     {
+      _id: {
+        type: Schema.Types.String,
+        default: randomUUID
+      },
       user: {
         type: Schema.Types.String,
         index: true,
         ref: 'users',
-        default: null,
-        required: true
+        default: null
       }
     }
   ],

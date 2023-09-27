@@ -30,6 +30,22 @@ class RoomManager implements IRoomManager {
 
     return room;
   }
+
+  public async updateOne(data: Room) {
+    const room = await this.RoomRepository.update(data);
+
+    if (!room) throw new Error('Room not found');
+
+    return room;
+  }
+
+  public async removeOne(id: string) {
+    const result = await this.RoomRepository.delete(id);
+
+    if (!result) throw new Error('Room not found');
+
+    return result;
+  }
 }
 
 export default RoomManager;

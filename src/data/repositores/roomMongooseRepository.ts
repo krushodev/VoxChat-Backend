@@ -2,7 +2,6 @@ import RoomModel from '../models/roomModel';
 
 import type Room from '../../domain/entities/room';
 import type IRoomRepository from './interfaces/roomRepositoryInterface';
-import type User from '../../domain/entities/user';
 
 class RoomMongooseRespository implements IRoomRepository {
   public async list() {
@@ -14,12 +13,12 @@ class RoomMongooseRespository implements IRoomRepository {
           name: roomDoc.name,
           topics: roomDoc.topics,
           members: roomDoc.members.map(member => ({
-            user: member.user as User | string
+            user: member.user
           })),
           messages: roomDoc.messages.map(message => ({
             id: message._id,
             text: message.text,
-            user: message.user as User | string,
+            user: message.user,
             date: message.date
           })),
           isPrivate: roomDoc.isPrivate,
@@ -37,12 +36,12 @@ class RoomMongooseRespository implements IRoomRepository {
           name: roomDoc.name,
           topics: roomDoc.topics,
           members: roomDoc.members.map(member => ({
-            user: member.user as User | string
+            user: member.user
           })),
           messages: roomDoc.messages.map(message => ({
             id: message._id,
             text: message.text,
-            user: message.user as User | string,
+            user: message.user,
             date: message.date
           })),
           isPrivate: roomDoc.isPrivate,
@@ -61,12 +60,12 @@ class RoomMongooseRespository implements IRoomRepository {
           name: roomDoc.name,
           topics: roomDoc.topics,
           members: roomDoc.members.map(member => ({
-            user: member.user as User | string
+            user: member.user
           })),
           messages: roomDoc.messages.map(message => ({
             id: message._id,
             text: message.text,
-            user: message.user as User | string,
+            user: message.user,
             date: message.date
           })),
           isPrivate: roomDoc.isPrivate,
@@ -74,6 +73,36 @@ class RoomMongooseRespository implements IRoomRepository {
         }
       : null;
   }
-}
 
+  public async update(data: Room) {
+    const { id, ...rest } = data;
+
+    const roomDoc = await RoomModel.findByIdAndUpdate(id, rest, { new: true });
+
+    return roomDoc
+      ? {
+          id: roomDoc._id,
+          name: roomDoc.name,
+          topics: roomDoc.topics,
+          members: roomDoc.members.map(member => ({
+            user: member.user
+          })),
+          messages: roomDoc.messages.map(message => ({
+            id: message._id,
+            text: message.text,
+            user: message.user,
+            date: message.date
+          })),
+          isPrivate: roomDoc.isPrivate,
+          password: roomDoc.password
+        }
+      : null;
+  }
+
+  public async delete(id: string) {
+    const roomDoc = await RoomModel.findByIdAndRemove(id);
+
+    return roomDoc ? true : null;
+  }
+}
 export default RoomMongooseRespository;

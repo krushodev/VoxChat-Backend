@@ -36,6 +36,30 @@ class RoomController {
       res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
     }
   }
+
+  public static async updateOne(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const manager = new RoomManager();
+      const result = await manager.updateOne({ id, ...req.body });
+      res.status(200).send({ status: 'success', data: result, message: 'Room updated successfully' });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
+    }
+  }
+
+  public static async removeOne(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const manager = new RoomManager();
+      await manager.removeOne(id);
+      res.status(200).send({ status: 'success', message: 'Room deleted successfully' });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
+    }
+  }
 }
 
 export default RoomController;
