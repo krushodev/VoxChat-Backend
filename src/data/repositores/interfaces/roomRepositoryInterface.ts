@@ -1,4 +1,4 @@
-import type Room from '../../../domain/entities/room';
+import { Room } from '../../../domain/entities/room';
 
 interface IRoomRepository {
   list: () => Promise<Room[] | null>;

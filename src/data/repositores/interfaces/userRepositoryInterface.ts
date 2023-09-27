@@ -1,4 +1,4 @@
-import type User from '../../../domain/entities/user';
+import { User } from '../../../domain/entities/user';
 
 interface IUserRepository {
   list: () => Promise<User[] | null>;

@@ -1,6 +1,8 @@
+import { Message } from '../../domain/entities/message';
+import { Room } from '../../domain/entities/room';
+import { User, type UserProps } from '../../domain/entities/user';
 import RoomModel from '../models/roomModel';
 
-import type Room from '../../domain/entities/room';
 import type IRoomRepository from './interfaces/roomRepositoryInterface';
 
 class RoomMongooseRespository implements IRoomRepository {
@@ -8,22 +10,28 @@ class RoomMongooseRespository implements IRoomRepository {
     const roomsDocs = await RoomModel.find();
 
     return roomsDocs.length > 0
-      ? roomsDocs.map(roomDoc => ({
-          id: roomDoc._id,
-          name: roomDoc.name,
-          topics: roomDoc.topics,
-          members: roomDoc.members.map(member => ({
-            user: member.user
-          })),
-          messages: roomDoc.messages.map(message => ({
-            id: message._id,
-            text: message.text,
-            user: message.user,
-            date: message.date
-          })),
-          isPrivate: roomDoc.isPrivate,
-          password: roomDoc.password
-        }))
+      ? roomsDocs.map(
+          roomDoc =>
+            new Room({
+              id: roomDoc._id,
+              name: roomDoc.name,
+              topics: roomDoc.topics,
+              members: roomDoc.members.map(member => ({
+                user: member.user ? new User(member.user as unknown as UserProps) : null
+              })),
+              messages: roomDoc.messages.map(
+                message =>
+                  new Message({
+                    id: message._id,
+                    text: message.text,
+                    user: message.user ? new User(message.user as unknown as UserProps) : null,
+                    date: message.date
+                  })
+              ),
+              isPrivate: roomDoc.isPrivate,
+              password: roomDoc.password
+            })
+        )
       : null;
   }
 
@@ -31,46 +39,52 @@ class RoomMongooseRespository implements IRoomRepository {
     const roomDoc = await RoomModel.findById(id);
 
     return roomDoc
-      ? {
+      ? new Room({
           id: roomDoc._id,
           name: roomDoc.name,
           topics: roomDoc.topics,
           members: roomDoc.members.map(member => ({
-            user: member.user
+            user: member.user ? new User(member.user as unknown as UserProps) : null
           })),
-          messages: roomDoc.messages.map(message => ({
-            id: message._id,
-            text: message.text,
-            user: message.user,
-            date: message.date
-          })),
+          messages: roomDoc.messages.map(
+            message =>
+              new Message({
+                id: message._id,
+                text: message.text,
+                user: message.user ? new User(message.user as unknown as UserProps) : null,
+                date: message.date
+              })
+          ),
           isPrivate: roomDoc.isPrivate,
           password: roomDoc.password
-        }
+        })
       : null;
   }
 
-  public async saveOne(data: Room) {
+  public async saveOne(data: RoomBodyPayload) {
     const newRoomDoc = new RoomModel(data);
     const roomDoc = await newRoomDoc.save();
 
     return roomDoc
-      ? {
+      ? new Room({
           id: roomDoc._id,
           name: roomDoc.name,
           topics: roomDoc.topics,
           members: roomDoc.members.map(member => ({
-            user: member.user
+            user: member.user ? new User(member.user as unknown as UserProps) : null
           })),
-          messages: roomDoc.messages.map(message => ({
-            id: message._id,
-            text: message.text,
-            user: message.user,
-            date: message.date
-          })),
+          messages: roomDoc.messages.map(
+            message =>
+              new Message({
+                id: message._id,
+                text: message.text,
+                user: message.user ? new User(message.user as unknown as UserProps) : null,
+                date: message.date
+              })
+          ),
           isPrivate: roomDoc.isPrivate,
           password: roomDoc.password
-        }
+        })
       : null;
   }
 
@@ -80,22 +94,25 @@ class RoomMongooseRespository implements IRoomRepository {
     const roomDoc = await RoomModel.findByIdAndUpdate(id, update, { new: true });
 
     return roomDoc
-      ? {
+      ? new Room({
           id: roomDoc._id,
           name: roomDoc.name,
           topics: roomDoc.topics,
           members: roomDoc.members.map(member => ({
-            user: member.user
+            user: member.user ? new User(member.user as unknown as UserProps) : null
           })),
-          messages: roomDoc.messages.map(message => ({
-            id: message._id,
-            text: message.text,
-            user: message.user,
-            date: message.date
-          })),
+          messages: roomDoc.messages.map(
+            message =>
+              new Message({
+                id: message._id,
+                text: message.text,
+                user: message.user ? new User(message.user as unknown as UserProps) : null,
+                date: message.date
+              })
+          ),
           isPrivate: roomDoc.isPrivate,
           password: roomDoc.password
-        }
+        })
       : null;
   }
 

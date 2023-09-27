@@ -1,3 +1,4 @@
+import { User } from '../../domain/entities/user';
 import UserModel from '../models/userModel';
 
 import type IUserRepository from './interfaces/userRepositoryInterface';
@@ -7,12 +8,15 @@ class UserMongooseRespository implements IUserRepository {
     const usersDocs = await UserModel.find();
 
     return usersDocs.length > 0
-      ? usersDocs.map(userDoc => ({
-          id: userDoc._id,
-          username: userDoc.username,
-          email: userDoc.email,
-          password: userDoc.password
-        }))
+      ? usersDocs.map(
+          userDoc =>
+            new User({
+              id: userDoc._id,
+              username: userDoc.username,
+              email: userDoc.email,
+              password: userDoc.password
+            })
+        )
       : null;
   }
 
@@ -20,12 +24,12 @@ class UserMongooseRespository implements IUserRepository {
     const userDoc = await UserModel.findById(id);
 
     return userDoc
-      ? {
+      ? new User({
           id: userDoc._id,
           username: userDoc.username,
           email: userDoc.email,
           password: userDoc.password
-        }
+        })
       : null;
   }
 
@@ -33,12 +37,12 @@ class UserMongooseRespository implements IUserRepository {
     const userDoc = await UserModel.findOne({ email: data });
 
     return userDoc
-      ? {
+      ? new User({
           id: userDoc._id,
           username: userDoc.username,
           email: userDoc.email,
           password: userDoc.password
-        }
+        })
       : null;
   }
 
@@ -47,12 +51,12 @@ class UserMongooseRespository implements IUserRepository {
     const userDoc = await newUserDoc.save();
 
     return userDoc
-      ? {
+      ? new User({
           id: userDoc._id,
           username: userDoc.username,
           email: userDoc.email,
           password: userDoc.password
-        }
+        })
       : null;
   }
 
@@ -62,12 +66,12 @@ class UserMongooseRespository implements IUserRepository {
     const userDoc = await UserModel.findByIdAndUpdate(id, update, { new: true });
 
     return userDoc
-      ? {
+      ? new User({
           id: userDoc._id,
           username: userDoc.username,
           email: userDoc.email,
           password: userDoc.password
-        }
+        })
       : null;
   }
 
