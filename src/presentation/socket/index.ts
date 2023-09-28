@@ -1,6 +1,6 @@
 import { Server as ServerType } from 'http';
 import { Server } from 'socket.io';
-import type { IMessage } from '../../types';
+import type { MessageBody } from '../../shared/types/room';
 
 const createSocketServer = (server: ServerType) => {
   const socketServer = new Server(server!, {
@@ -10,7 +10,7 @@ const createSocketServer = (server: ServerType) => {
   });
 
   socketServer.on('connection', socket => {
-    socket.on('sendMessage', (data: IMessage) => {
+    socket.on('sendMessage', (data: MessageBody) => {
       socket.broadcast.emit('receiveMessages', data);
     });
   });

@@ -2,12 +2,12 @@ import container from '../../container';
 
 import { generateHash } from '../../shared';
 
-import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
-import type IUserManager from './interfaces/userManagerInterface';
-import { UserBodyPayload, UserBodyUpdatePayload } from '../../shared/types/user';
 import idSchema from '../validations/shared/idValidation';
 import userBodySchema from '../validations/user/userBodyValidation';
 import userBodyUpdateSchema from '../validations/user/userBodyUpdateValidation';
+
+import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
+import type IUserManager from './interfaces/userManagerInterface';
 
 class UserManager implements IUserManager {
   private UserRepository: IUserRepository = container.resolve('UserRepository');
@@ -42,7 +42,7 @@ class UserManager implements IUserManager {
     return user;
   }
 
-  public async updateOne(data: UserBodyUpdatePayload) {
+  public async updateOne(data: UserUpdateBodyPayload) {
     const { id, update } = await userBodyUpdateSchema.parseAsync(data);
 
     const user = await this.UserRepository.update({ id, update });

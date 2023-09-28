@@ -1,18 +1,12 @@
 import type { Request } from 'express';
-import type User from './domain/entities/user';
-
-export interface IMessage {
-  id: string;
-  text: string;
-  user: User | string;
-  date: Date;
-}
+import type { User } from './domain/entities/user';
+import type { JwtPayload } from 'jsonwebtoken';
 
 export interface RequestWithUser extends Request {
   user?: User;
 }
 
-export interface ResponseJWT {
+export interface ResponseJWT extends JwtPayload {
   user: User;
 }
 

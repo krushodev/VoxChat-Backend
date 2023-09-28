@@ -9,7 +9,7 @@ import type ISessionManager from './interfaces/sessionManagerInterface';
 import type { ResponseJWT, UserLoginProps } from '../../types';
 
 import loginSchema from '../validations/session/loginValidation';
-import { UserBodyPayload } from '../../shared/types/user';
+
 import userBodySchema from '../validations/user/userBodyValidation';
 
 class SessionManager implements ISessionManager {
@@ -41,7 +41,7 @@ class SessionManager implements ISessionManager {
 
     const hashedPassword = await generateHash(password);
 
-    await this.userRepository.saveOne({ ...data, password: hashedPassword });
+    await this.userRepository.saveOne({ ...data, password: hashedPassword } as UserBody);
 
     return true;
   }
