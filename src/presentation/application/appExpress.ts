@@ -6,6 +6,7 @@ import sessionRouter from '../routes/sessionRouter';
 import userRouter from '../routes/userRouter';
 
 import IApplication from './interfaces/appInterface';
+import errorHandler from '../middlewares/errorHandler';
 
 class AppExpress implements IApplication {
   private app = express();
@@ -25,6 +26,7 @@ class AppExpress implements IApplication {
     this.app.use('/api/sessions', sessionRouter);
     this.app.use('/api/rooms', roomRouter);
     this.app.use('/api/users', userRouter);
+    this.app.use(errorHandler);
   }
 
   listen() {

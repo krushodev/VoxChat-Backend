@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import idSchema from '../shared/idValidation.js';
-import roomBodySchema from './roomBodyValidation.js';
+import idSchema from '../shared/idValidation';
+import roomBodySchema from './roomBodyValidation';
 
 const roomBodyUpdateSchema = z.object({
   id: idSchema,

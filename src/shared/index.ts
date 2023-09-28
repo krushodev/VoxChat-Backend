@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
-import { User } from '../domain/entities/user';
+import type { User } from '../domain/entities/user';
 
 dotenv.config();
 
