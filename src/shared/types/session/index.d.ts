@@ -7,6 +7,6 @@ export interface ResponseJWT {
 }
 
 export interface UserLoginProps {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }

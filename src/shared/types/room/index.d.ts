@@ -1,24 +1,37 @@
-import { Message } from '../../../domain/entities/message';
-import { User } from '../../../domain/entities/user';
+import type { Message } from '../../../domain/entities/message';
+import type { User } from '../../../domain/entities/user';
+import type { UserBodyPayload } from '../user';
 
-interface RoomBodyPayload {
-  id: string;
+interface RoomBody {
+  id?: string;
   name: string;
   topics: string[];
-  messages: Message[] | [];
+  messages: MessageBody[];
   members: {
-    user: User | string;
+    user: string;
   }[];
   isPrivate: boolean;
   password: string | null;
 }
 
-interface RoomBodyUpdatePayload {
+interface RoomUpdateBody {
   id: string;
-  update: RoomBodyPayload;
+  update: RoomBody;
 }
 
-interface MessageBodyPayload {
-  id: string;
-  message: Message;
+interface MessageBody {
+  id?: string;
+  text: string;
+  user: string;
+  date: Date;
 }
+
+interface MessageUpdateBody {
+  id: string;
+  message: MessageBody;
+}
+
+interface RoomBodyPayload extends RoomBody<Partial> {}
+interface RoomUpdateBodyPayload extends RoomUpdateBody<Partial> {}
+interface MessageBodyPayload extends MessageBody<Partial> {}
+interface MessageUpdateBodyPayload extends MessageUpdateBody<Partial> {}

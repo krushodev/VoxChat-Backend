@@ -10,7 +10,7 @@ class RoomController {
       res.status(200).send({ status: 'success', data: result });
     } catch (err) {
       console.log(err);
-      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
+      res.status(500).send({ status: 'error', mesagge: 'Something went wrong' });
     }
   }
 
@@ -22,7 +22,7 @@ class RoomController {
       res.status(200).send({ status: 'success', data: result });
     } catch (err) {
       console.log(err);
-      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
+      res.status(500).send({ status: 'error', mesagge: 'Something went wrong' });
     }
   }
 
@@ -33,7 +33,7 @@ class RoomController {
       res.status(201).send({ status: 'success', data: result, message: 'Room created successfully' });
     } catch (err) {
       console.log(err);
-      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
+      res.status(500).send({ status: 'error', mesagge: 'Something went wrong' });
     }
   }
 
@@ -45,7 +45,7 @@ class RoomController {
       res.status(200).send({ status: 'success', data: result, message: 'Room updated successfully' });
     } catch (err) {
       console.log(err);
-      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
+      res.status(500).send({ status: 'error', mesagge: 'Something went wrong' });
     }
   }
 
@@ -57,7 +57,7 @@ class RoomController {
       res.status(200).send({ status: 'success', message: 'Room deleted successfully' });
     } catch (err) {
       console.log(err);
-      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
+      res.status(500).send({ status: 'error', mesagge: 'Something went wrong' });
     }
   }
 
@@ -66,10 +66,10 @@ class RoomController {
       const { id } = req.params;
       const manager = new RoomManager();
       await manager.insertMessage({ id, message: req.body });
-      res.status(200).send({ status: 'success', message: 'Message sended to the room successfully' });
+      res.status(201).send({ status: 'success', message: 'Message sended to the room successfully' });
     } catch (err) {
       console.log(err);
-      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
+      res.status(500).send({ status: 'error', mesagge: 'Something went wrong' });
     }
   }
 }

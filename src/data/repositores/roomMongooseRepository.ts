@@ -1,7 +1,7 @@
 import { Message } from '../../domain/entities/message';
 import { Room } from '../../domain/entities/room';
 import { User, type UserProps } from '../../domain/entities/user';
-import type { RoomBodyPayload, RoomBodyUpdatePayload } from '../../shared/types/room';
+import { RoomBody, RoomUpdateBody } from '../../shared/types/room';
 import RoomModel from '../models/roomModel';
 
 import type IRoomRepository from './interfaces/roomRepositoryInterface';
@@ -62,7 +62,7 @@ class RoomMongooseRespository implements IRoomRepository {
       : null;
   }
 
-  public async saveOne(data: RoomBodyPayload) {
+  public async saveOne(data: RoomBody) {
     const newRoomDoc = new RoomModel(data);
     const roomDoc = await newRoomDoc.save();
 
@@ -89,7 +89,7 @@ class RoomMongooseRespository implements IRoomRepository {
       : null;
   }
 
-  public async update(data: RoomBodyUpdatePayload) {
+  public async update(data: RoomUpdateBody) {
     const { id, update } = data;
 
     const roomDoc = await RoomModel.findByIdAndUpdate(id, update, { new: true });

@@ -1,12 +1,12 @@
-// @ts-nocheck
 import container from '../../container';
 
-import type IRoomRepository from '../../data/repositores/interfaces/roomRepositoryInterface';
-import type { MessageBodyPayload, RoomBodyPayload, RoomBodyUpdatePayload } from '../../shared/types/room';
 import roomAddMessageSchema from '../validations/room/roomAddMessageValidation';
 import roomBodyUpdateSchema from '../validations/room/roomBodyUpdateValidation';
 import roomBodySchema from '../validations/room/roomBodyValidation';
 import idSchema from '../validations/shared/idValidation';
+
+import type IRoomRepository from '../../data/repositores/interfaces/roomRepositoryInterface';
+import type { MessageBody, MessageUpdateBodyPayload, RoomBody, RoomBodyPayload, RoomUpdateBodyPayload } from '../../shared/types/room';
 import type IRoomManager from './interfaces/roomManagerInterface';
 
 class RoomManager implements IRoomManager {
@@ -40,7 +40,7 @@ class RoomManager implements IRoomManager {
     return room;
   }
 
-  public async updateOne(data: RoomBodyUpdatePayload) {
+  public async updateOne(data: RoomUpdateBodyPayload) {
     const { id, update } = await roomBodyUpdateSchema.parseAsync(data);
 
     const room = await this.RoomRepository.update({ id, update });
@@ -60,7 +60,7 @@ class RoomManager implements IRoomManager {
     return result;
   }
 
-  public async insertMessage(data: MessageBodyPayload) {
+  public async insertMessage(data: MessageUpdateBodyPayload) {
     const { id, message } = await roomAddMessageSchema.parseAsync(data);
 
     const room = await this.RoomRepository.findOne(id);
@@ -69,7 +69,9 @@ class RoomManager implements IRoomManager {
 
     const newMessageList = [...room.messages, message];
 
-    const result = await this.RoomRepository.update({ id, update: { messages: newMessageList } });
+    const result = await this.RoomRepository.update({ id, update: { messages: newMessageList as MessageBody[] } as RoomBody });
+
+    if (!result) throw new Error('Error to send message');
 
     return result;
   }
