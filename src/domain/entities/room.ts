@@ -9,6 +9,7 @@ export interface RoomProps {
   members: {
     user: User | null;
   }[];
+  owner: User | null;
   isPrivate: boolean;
   password: string | null;
 }
@@ -21,6 +22,7 @@ export class Room {
   public members: {
     user: User | null;
   }[];
+  public owner: User | null;
   public isPrivate: boolean;
   public password: string | null;
 
@@ -30,6 +32,7 @@ export class Room {
     this.topics = props.topics;
     this.messages = props.messages;
     this.members = props.members;
+    this.owner = props.owner;
     this.isPrivate = props.isPrivate;
     this.password = props.password;
   }

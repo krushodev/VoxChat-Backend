@@ -14,6 +14,7 @@ const roomBodySchema = z.object({
       user: idSchema
     })
     .array(),
+  owner: idSchema,
   isPrivate: z.boolean().optional().default(false),
   password: passwordSchema.optional().or(z.null()).default(null)
 });

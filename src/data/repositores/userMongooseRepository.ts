@@ -1,7 +1,6 @@
-import { User } from '../../domain/entities/user';
-
 import UserModel from '../models/userModel';
 
+import { User } from '../../domain/entities/user';
 import type IUserRepository from './interfaces/userRepositoryInterface';
 
 class UserMongooseRespository implements IUserRepository {

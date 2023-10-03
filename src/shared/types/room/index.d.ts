@@ -10,6 +10,7 @@ interface RoomBody {
   members: {
     user: string;
   }[];
+  onwer: string;
   isPrivate: boolean;
   password: string | null;
 }

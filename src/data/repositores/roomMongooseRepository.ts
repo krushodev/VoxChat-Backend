@@ -1,9 +1,9 @@
+import RoomModel from '../models/roomModel';
+
 import { Message } from '../../domain/entities/message';
 import { Room } from '../../domain/entities/room';
 import { User, type UserProps } from '../../domain/entities/user';
-import { RoomBody, RoomUpdateBody } from '../../shared/types/room';
-import RoomModel from '../models/roomModel';
-
+import type { RoomBody, RoomUpdateBody } from '../../shared/types/room';
 import type IRoomRepository from './interfaces/roomRepositoryInterface';
 
 class RoomMongooseRespository implements IRoomRepository {
@@ -29,6 +29,7 @@ class RoomMongooseRespository implements IRoomRepository {
                     date: message.date
                   })
               ),
+              owner: roomDoc.owner ? new User(roomDoc.owner as unknown as UserProps) : null,
               isPrivate: roomDoc.isPrivate,
               password: roomDoc.password
             })
@@ -56,6 +57,7 @@ class RoomMongooseRespository implements IRoomRepository {
                 date: message.date
               })
           ),
+          owner: roomDoc.owner ? new User(roomDoc.owner as unknown as UserProps) : null,
           isPrivate: roomDoc.isPrivate,
           password: roomDoc.password
         })
@@ -83,6 +85,7 @@ class RoomMongooseRespository implements IRoomRepository {
                 date: message.date
               })
           ),
+          owner: roomDoc.owner ? new User(roomDoc.owner as unknown as UserProps) : null,
           isPrivate: roomDoc.isPrivate,
           password: roomDoc.password
         })
@@ -111,6 +114,7 @@ class RoomMongooseRespository implements IRoomRepository {
                 date: message.date
               })
           ),
+          owner: roomDoc.owner ? new User(roomDoc.owner as unknown as UserProps) : null,
           isPrivate: roomDoc.isPrivate,
           password: roomDoc.password
         })

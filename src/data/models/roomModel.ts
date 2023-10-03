@@ -53,6 +53,14 @@ const roomSchema = new Schema({
       }
     }
   ],
+  owner: {
+    type: {
+      type: Schema.Types.String,
+      index: true,
+      ref: 'users',
+      default: null
+    }
+  },
   isPrivate: {
     type: Schema.Types.Boolean,
     default: false
