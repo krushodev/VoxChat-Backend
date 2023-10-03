@@ -33,7 +33,7 @@ class RoomMongooseRespository implements IRoomRepository {
               password: roomDoc.password
             })
         )
-      : null;
+      : [];
   }
 
   public async findOne(id: string) {

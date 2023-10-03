@@ -6,7 +6,7 @@ import passwordSchema from '../shared/passwordValidation';
 
 const roomBodySchema = z.object({
   id: idSchema.optional(),
-  name: z.string().nonempty().max(35).trim(),
+  name: z.string().nonempty().max(40).trim(),
   topics: z.string().nonempty().max(15).trim().toLowerCase().array(),
   messages: messageBodySchema.array().optional().default([]),
   members: z

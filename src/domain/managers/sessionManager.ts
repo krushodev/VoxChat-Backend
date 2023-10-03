@@ -22,7 +22,7 @@ class SessionManager implements ISessionManager {
 
     if (!user) throw new Error('Incorrect user or password');
 
-    const hashedPasswordValidation = await validateHash(data.password, password);
+    const hashedPasswordValidation = await validateHash(password, user.password);
 
     if (!hashedPasswordValidation) throw new Error('Incorrect user or password');
 

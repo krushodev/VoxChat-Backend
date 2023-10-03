@@ -6,7 +6,7 @@ const messageBodySchema = z.object({
   id: idSchema.optional(),
   text: z.string().trim().nonempty(),
   user: idSchema,
-  date: z.date().optional().default(new Date())
+  date: z.coerce.date().optional().default(new Date())
 });
 
 export default messageBodySchema;

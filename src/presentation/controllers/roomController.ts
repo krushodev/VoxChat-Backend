@@ -7,7 +7,7 @@ class RoomController {
     try {
       const manager = new RoomManager();
       const result = await manager.list();
-      res.status(200).send({ status: 'success', data: result });
+      res.status(200).send({ status: 'success', payload: result });
     } catch (err) {
       next(err);
     }
@@ -18,7 +18,7 @@ class RoomController {
       const { id } = req.params;
       const manager = new RoomManager();
       const result = await manager.getOne(id);
-      res.status(200).send({ status: 'success', data: result });
+      res.status(200).send({ status: 'success', payload: result });
     } catch (err) {
       next(err);
     }
@@ -28,8 +28,10 @@ class RoomController {
     try {
       const manager = new RoomManager();
       const result = await manager.createOne(req.body);
-      res.status(201).send({ status: 'success', data: result, message: 'Room created successfully' });
+      res.status(201).send({ status: 'success', payload: result, message: 'Room created successfully' });
     } catch (err) {
+      console.log(err);
+
       next(err);
     }
   }
@@ -39,7 +41,7 @@ class RoomController {
       const { id } = req.params;
       const manager = new RoomManager();
       const result = await manager.updateOne({ id, update: req.body });
-      res.status(200).send({ status: 'success', data: result, message: 'Room updated successfully' });
+      res.status(200).send({ status: 'success', payload: result, message: 'Room updated successfully' });
     } catch (err) {
       next(err);
     }
@@ -62,6 +64,18 @@ class RoomController {
       const manager = new RoomManager();
       await manager.insertMessage({ id, message: req.body });
       res.status(201).send({ status: 'success', message: 'Message sended to the room successfully' });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
+  public static async getMessages(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const manager = new RoomManager();
+      const result = await manager.listMessages(id);
+      res.status(201).send({ status: 'success', payload: result });
     } catch (err) {
       next(err);
     }

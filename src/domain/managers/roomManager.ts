@@ -83,6 +83,16 @@ class RoomManager implements IRoomManager {
 
     return result;
   }
+
+  public async listMessages(id: string) {
+    const rid = await idSchema.parseAsync(id);
+
+    const room = await this.RoomRepository.findOne(rid);
+
+    if (!room) throw new Error('Room not found');
+
+    return room.messages;
+  }
 }
 
 export default RoomManager;

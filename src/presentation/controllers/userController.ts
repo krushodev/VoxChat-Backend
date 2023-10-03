@@ -7,7 +7,7 @@ class UserController {
     try {
       const manager = new UserManager();
       const result = await manager.list();
-      res.status(200).send({ status: 'success', data: result });
+      res.status(200).send({ status: 'success', payload: result });
     } catch (err) {
       next(err);
     }
@@ -18,7 +18,7 @@ class UserController {
       const { id } = req.params;
       const manager = new UserManager();
       const result = await manager.getOne(id);
-      res.status(200).send({ status: 'success', data: result });
+      res.status(200).send({ status: 'success', payload: result });
     } catch (err) {
       console.log(err);
       res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
@@ -29,7 +29,7 @@ class UserController {
     try {
       const manager = new UserManager();
       const result = await manager.createOne(req.body);
-      res.status(201).send({ status: 'success', data: result, message: 'User created successfully' });
+      res.status(201).send({ status: 'success', payload: result, message: 'User created successfully' });
     } catch (err) {
       next(err);
     }
@@ -40,7 +40,7 @@ class UserController {
       const { id } = req.params;
       const manager = new UserManager();
       const result = await manager.updateOne({ id, update: req.body });
-      res.status(200).send({ status: 'success', data: result, message: 'User updated successfully' });
+      res.status(200).send({ status: 'success', payload: result, message: 'User updated successfully' });
     } catch (err) {
       next(err);
     }
