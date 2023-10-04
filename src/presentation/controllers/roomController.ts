@@ -80,6 +80,17 @@ class RoomController {
       next(err);
     }
   }
+
+  public static async addMember(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { rid, uid } = req.params;
+      const manager = new RoomManager();
+      await manager.insertMember({ rid, uid });
+      res.status(200).send({ status: 'success', message: 'User joined to the room successfully' });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default RoomController;

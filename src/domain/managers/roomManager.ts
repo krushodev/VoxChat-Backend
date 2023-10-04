@@ -7,11 +7,13 @@ import roomBodySchema from '../validations/room/roomBodyValidation';
 import idSchema from '../validations/shared/idValidation';
 
 import type IRoomRepository from '../../data/repositores/interfaces/roomRepositoryInterface';
-import type { MessageBody, MessageUpdateBodyPayload, RoomBody, RoomBodyPayload, RoomUpdateBodyPayload } from '../../shared/types/room';
+import type { MessageUpdateBodyPayload, RoomBody, RoomBodyPayload, RoomUpdateBodyPayload } from '../../shared/types/room';
 import type IRoomManager from './interfaces/roomManagerInterface';
+import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
 
 class RoomManager implements IRoomManager {
   private RoomRepository: IRoomRepository = container.resolve('RoomRepository');
+  private UserRepository: IUserRepository = container.resolve('UserRepository');
 
   public async list() {
     const rooms = await this.RoomRepository.list();
@@ -92,6 +94,35 @@ class RoomManager implements IRoomManager {
     if (!room) throw new Error('Room not found');
 
     return room.messages;
+  }
+
+  public async insertMember(data: { rid: string; uid: string }) {
+    const rid = await idSchema.parseAsync(data.rid);
+    const uid = await idSchema.parseAsync(data.uid);
+
+    const room = await this.RoomRepository.findOne(rid);
+
+    if (!room) throw new Error('Room not found');
+
+    const user = await this.UserRepository.findOne(uid);
+
+    if (!user) throw new Error('User not found');
+
+    const newMembersList = room.members.map(member => ({
+      user: member.user.id
+    }));
+
+    const userIsInList = newMembersList.some(member => member.user === user.id);
+
+    if (userIsInList) throw new Error('User is already in the room');
+
+    newMembersList.push({ user: user.id });
+
+    const result = await this.RoomRepository.update({ id: rid, update: { members: newMembersList } });
+
+    if (!result) throw new Error('Error to insert member');
+
+    return result;
   }
 }
 
