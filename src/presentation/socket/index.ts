@@ -13,6 +13,9 @@ const createSocketServer = (server: ServerType) => {
     socket.on('sendMessage', (data: MessageBody) => {
       socket.broadcast.emit('receiveMessages', data);
     });
+    socket.on('createRoom', data => {
+      socket.broadcast.emit('resolveNewRooms', data);
+    });
   });
 };
 

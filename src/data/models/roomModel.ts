@@ -54,12 +54,9 @@ const roomSchema = new Schema({
     }
   ],
   owner: {
-    type: {
-      type: Schema.Types.String,
-      index: true,
-      ref: 'users',
-      default: null
-    }
+    type: Schema.Types.String,
+    index: true,
+    ref: 'users'
   },
   isPrivate: {
     type: Schema.Types.Boolean,
@@ -74,11 +71,13 @@ const roomSchema = new Schema({
 roomSchema.pre('find', function () {
   this.populate('messages.user');
   this.populate('members.user');
+  this.populate('owner');
 });
 
 roomSchema.pre('findOne', function () {
   this.populate('messages.user');
   this.populate('members.user');
+  this.populate('owner');
 });
 
 export default model(roomsCollection, roomSchema);
