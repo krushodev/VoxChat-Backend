@@ -30,7 +30,7 @@ class AppExpress implements IApplication {
   }
 
   listen() {
-    return this.app.listen(this.PORT, () => {
+    return this.app.listen(+this.PORT!, '0.0.0.0', () => {
       console.log(`Server running on port ${this.PORT}`);
     });
   }
