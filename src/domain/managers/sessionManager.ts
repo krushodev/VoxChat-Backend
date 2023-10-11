@@ -4,13 +4,13 @@ import container from '../../container';
 
 import { generateAccessToken, generateHash, generateRefreshToken, validateHash } from '../../shared';
 
+import loginSchema from '../validations/session/loginValidation';
+import userBodySchema from '../validations/user/userBodyValidation';
+import updateUserImageSchema from '../validations/session/updateUserImageValidation';
+
 import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
 import type ISessionManager from './interfaces/sessionManagerInterface';
 import type { ResponseJWT, UserLoginProps } from '../../types';
-
-import loginSchema from '../validations/session/loginValidation';
-
-import userBodySchema from '../validations/user/userBodyValidation';
 
 class SessionManager implements ISessionManager {
   private userRepository: IUserRepository = container.resolve('UserRepository');
@@ -62,6 +62,20 @@ class SessionManager implements ISessionManager {
     const newAccessToken = generateAccessToken(user);
 
     return newAccessToken;
+  }
+
+  public async updateImage(data: { id: string; image: string }) {
+    const { id, image } = await updateUserImageSchema.parseAsync(data);
+
+    const user = await this.userRepository.findOne(id);
+
+    if (!user) throw new Error('User not found');
+
+    const result = await this.userRepository.update({ id, update: { image } });
+
+    if (!result) throw new Error('Error to update user image');
+
+    return true;
   }
 }
 

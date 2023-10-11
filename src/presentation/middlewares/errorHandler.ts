@@ -12,7 +12,7 @@ const errorHandler = (err: Error | ZodError, req: Request, res: Response, next: 
     return res.status(400).send({ status: 'error', error: (err as ZodError).issues });
   }
 
-  res.status(500).send({ status: 'error', error: err.message ?? 'Error. Something went wrong' });
+  res.status(500).send({ status: 'error', error: err.message ?? 'Error. Algo salió mal' });
 };
 
 export default errorHandler;

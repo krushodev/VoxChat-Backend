@@ -3,6 +3,7 @@ import RoomModel from '../models/roomModel';
 import { Message } from '../../domain/entities/message';
 import { Room } from '../../domain/entities/room';
 import { User, type UserProps } from '../../domain/entities/user';
+
 import type { RoomBody, RoomUpdateBody } from '../../shared/types/room';
 import type IRoomRepository from './interfaces/roomRepositoryInterface';
 

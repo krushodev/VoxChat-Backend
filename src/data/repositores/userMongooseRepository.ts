@@ -1,6 +1,8 @@
 import UserModel from '../models/userModel';
 
 import { User } from '../../domain/entities/user';
+import { Room, type RoomProps } from '../../domain/entities/room';
+
 import type IUserRepository from './interfaces/userRepositoryInterface';
 
 class UserMongooseRespository implements IUserRepository {
@@ -14,7 +16,12 @@ class UserMongooseRespository implements IUserRepository {
               id: userDoc._id,
               username: userDoc.username,
               email: userDoc.email,
-              password: userDoc.password
+              image: userDoc.image,
+              password: userDoc.password,
+              rooms: userDoc.rooms.map(item => ({
+                room: item.room ? new Room(item.room as unknown as RoomProps) : null,
+                isOwner: item.isOwner
+              }))
             })
         )
       : null;
@@ -28,7 +35,12 @@ class UserMongooseRespository implements IUserRepository {
           id: userDoc._id,
           username: userDoc.username,
           email: userDoc.email,
-          password: userDoc.password
+          image: userDoc.image,
+          password: userDoc.password,
+          rooms: userDoc.rooms.map(item => ({
+            room: item.room ? new Room(item.room as unknown as RoomProps) : null,
+            isOwner: item.isOwner
+          }))
         })
       : null;
   }
@@ -41,7 +53,12 @@ class UserMongooseRespository implements IUserRepository {
           id: userDoc._id,
           username: userDoc.username,
           email: userDoc.email,
-          password: userDoc.password
+          image: userDoc.image,
+          password: userDoc.password,
+          rooms: userDoc.rooms.map(item => ({
+            room: item.room ? new Room(item.room as unknown as RoomProps) : null,
+            isOwner: item.isOwner
+          }))
         })
       : null;
   }
@@ -55,7 +72,12 @@ class UserMongooseRespository implements IUserRepository {
           id: userDoc._id,
           username: userDoc.username,
           email: userDoc.email,
-          password: userDoc.password
+          image: userDoc.image,
+          password: userDoc.password,
+          rooms: userDoc.rooms.map(item => ({
+            room: item.room ? new Room(item.room as unknown as RoomProps) : null,
+            isOwner: item.isOwner
+          }))
         })
       : null;
   }
@@ -70,7 +92,12 @@ class UserMongooseRespository implements IUserRepository {
           id: userDoc._id,
           username: userDoc.username,
           email: userDoc.email,
-          password: userDoc.password
+          image: userDoc.image,
+          password: userDoc.password,
+          rooms: userDoc.rooms.map(item => ({
+            room: item.room ? new Room(item.room as unknown as RoomProps) : null,
+            isOwner: item.isOwner
+          }))
         })
       : null;
   }

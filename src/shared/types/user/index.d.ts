@@ -2,7 +2,9 @@ interface UserBody {
   id?: string;
   username: string;
   email: string;
+  image: string | null;
   password: string;
+  rooms: { room: string; isOwner: boolean }[];
 }
 
 interface UserUpdateBody {

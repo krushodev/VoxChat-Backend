@@ -5,7 +5,7 @@ import userBodySchema from './userBodyValidation';
 
 const userBodyUpdateSchema = z.object({
   id: idSchema,
-  update: userBodySchema
+  update: userBodySchema.partial()
 });
 
 export default userBodyUpdateSchema;

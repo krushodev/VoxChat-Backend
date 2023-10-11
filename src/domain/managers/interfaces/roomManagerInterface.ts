@@ -1,5 +1,5 @@
-import type { MessageUpdateBodyPayload, RoomBodyPayload, RoomUpdateBodyPayload } from '../../../shared/types/room';
 import type { Room } from '../../entities/room';
+import type { MessageUpdateBodyPayload, RoomBodyPayload, RoomUpdateBodyPayload } from '../../../shared/types/room';
 
 interface IRoomManager {
   list: () => Promise<Room[]>;

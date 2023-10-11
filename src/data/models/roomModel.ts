@@ -30,8 +30,7 @@ const roomSchema = new Schema({
       user: {
         type: Schema.Types.String,
         index: true,
-        ref: 'users',
-        default: null
+        ref: 'users'
       },
       date: {
         type: Schema.Types.Date,
@@ -48,8 +47,7 @@ const roomSchema = new Schema({
       user: {
         type: Schema.Types.String,
         index: true,
-        ref: 'users',
-        default: null
+        ref: 'users'
       }
     }
   ],
@@ -75,6 +73,12 @@ roomSchema.pre('find', function () {
 });
 
 roomSchema.pre('findOne', function () {
+  this.populate('messages.user');
+  this.populate('members.user');
+  this.populate('owner');
+});
+
+roomSchema.pre('save', function () {
   this.populate('messages.user');
   this.populate('members.user');
   this.populate('owner');

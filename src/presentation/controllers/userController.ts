@@ -20,8 +20,7 @@ class UserController {
       const result = await manager.getOne(id);
       res.status(200).send({ status: 'success', payload: result });
     } catch (err) {
-      console.log(err);
-      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
+      next(err);
     }
   }
 
@@ -29,7 +28,7 @@ class UserController {
     try {
       const manager = new UserManager();
       const result = await manager.createOne(req.body);
-      res.status(201).send({ status: 'success', payload: result, message: 'User created successfully' });
+      res.status(201).send({ status: 'success', payload: result, message: 'Usurio creado correctamente' });
     } catch (err) {
       next(err);
     }
@@ -40,7 +39,7 @@ class UserController {
       const { id } = req.params;
       const manager = new UserManager();
       const result = await manager.updateOne({ id, update: req.body });
-      res.status(200).send({ status: 'success', payload: result, message: 'User updated successfully' });
+      res.status(200).send({ status: 'success', payload: result, message: 'Usuario actualizado correctamente' });
     } catch (err) {
       next(err);
     }
@@ -51,7 +50,7 @@ class UserController {
       const { id } = req.params;
       const manager = new UserManager();
       await manager.removeOne(id);
-      res.status(200).send({ status: 'success', message: 'User deleted successfully' });
+      res.status(200).send({ status: 'success', message: 'Usuario eliminado correctamente' });
     } catch (err) {
       next(err);
     }

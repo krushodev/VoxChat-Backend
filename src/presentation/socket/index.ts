@@ -1,5 +1,6 @@
 import { Server as ServerType } from 'http';
 import { Server } from 'socket.io';
+
 import type { MessageBody } from '../../shared/types/room';
 
 const createSocketServer = (server: ServerType) => {

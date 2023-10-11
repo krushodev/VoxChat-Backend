@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
 import { Server } from 'http';
+import dotenv from 'dotenv';
 
 import DbFactory from './data/factories/dbFactory';
 import AppFactory from './presentation/factories/appFactory';

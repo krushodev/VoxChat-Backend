@@ -20,8 +20,7 @@ class SessionController {
       await manager.signup(req.body);
       res.status(201).send({ status: 'success', message: 'Te has registrado correctamente' });
     } catch (err) {
-      console.log(err);
-      res.status(500).send({ status: 'erorr', mesagge: 'Something went wrong' });
+      next(err);
     }
   }
 
@@ -40,6 +39,17 @@ class SessionController {
       const manager = new SessionManager();
       const accessToken = await manager.resolveRefreshToken(refreshToken);
       res.status(200).send({ status: 'success', message: 'Has renovado tu refresh token', payload: { accessToken } });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  public static async updateImage(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const manager = new SessionManager();
+      await manager.updateImage({ id, ...req.body });
+      res.status(200).send({ status: 'success', message: 'Imagen de perfil actualizada correctamente' });
     } catch (err) {
       next(err);
     }

@@ -28,10 +28,8 @@ class RoomController {
     try {
       const manager = new RoomManager();
       const result = await manager.createOne(req.body);
-      res.status(201).send({ status: 'success', payload: result, message: 'Room created successfully' });
+      res.status(201).send({ status: 'success', payload: result, message: 'Room creada correctamente' });
     } catch (err) {
-      console.log(err);
-
       next(err);
     }
   }
@@ -41,7 +39,7 @@ class RoomController {
       const { id } = req.params;
       const manager = new RoomManager();
       const result = await manager.updateOne({ id, update: req.body });
-      res.status(200).send({ status: 'success', payload: result, message: 'Room updated successfully' });
+      res.status(200).send({ status: 'success', payload: result, message: 'Room actualizada correctamente' });
     } catch (err) {
       next(err);
     }
@@ -52,7 +50,7 @@ class RoomController {
       const { id } = req.params;
       const manager = new RoomManager();
       await manager.removeOne(id);
-      res.status(200).send({ status: 'success', message: 'Room deleted successfully' });
+      res.status(200).send({ status: 'success', message: 'Room eliminada correctamente' });
     } catch (err) {
       next(err);
     }
@@ -63,9 +61,8 @@ class RoomController {
       const { id } = req.params;
       const manager = new RoomManager();
       await manager.insertMessage({ id, message: req.body });
-      res.status(201).send({ status: 'success', message: 'Message sended to the room successfully' });
+      res.status(201).send({ status: 'success', message: 'Mensaje enviado correctamente' });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -86,7 +83,7 @@ class RoomController {
       const { rid, uid } = req.params;
       const manager = new RoomManager();
       await manager.insertMember({ rid, uid });
-      res.status(200).send({ status: 'success', message: 'User joined to the room successfully' });
+      res.status(200).send({ status: 'success', message: 'Usuario incorporado correctamente' });
     } catch (err) {
       next(err);
     }

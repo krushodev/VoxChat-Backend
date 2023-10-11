@@ -1,4 +1,5 @@
 // @ts-nocheck
+
 import container from '../../container';
 
 import roomAddMessageSchema from '../validations/room/roomAddMessageValidation';
@@ -7,7 +8,7 @@ import roomBodySchema from '../validations/room/roomBodyValidation';
 import idSchema from '../validations/shared/idValidation';
 
 import type IRoomRepository from '../../data/repositores/interfaces/roomRepositoryInterface';
-import type { MessageUpdateBodyPayload, RoomBody, RoomBodyPayload, RoomUpdateBodyPayload } from '../../shared/types/room';
+import type { MessageBody, MessageUpdateBodyPayload, RoomBody, RoomBodyPayload, RoomUpdateBodyPayload } from '../../shared/types/room';
 import type IRoomManager from './interfaces/roomManagerInterface';
 import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
 
@@ -39,6 +40,24 @@ class RoomManager implements IRoomManager {
     const room = await this.RoomRepository.saveOne(dataValidated);
 
     if (!room) throw new Error('Room not found');
+
+    if (room.owner) {
+      console.log(room.owner);
+      const user = await this.UserRepository.findOne(room.owner.id);
+
+      if (!user) throw new Error('User not found');
+
+      const newRoomsList = user.rooms.map(item => ({
+        room: item.room?.id,
+        isOwner: item.isOwner
+      }));
+
+      newRoomsList.push({ room: room.id, isOwner: true });
+
+      const result = await this.UserRepository.update({ id: user.id, update: { rooms: newRoomsList } });
+
+      if (!result) throw Error('Error to update user');
+    }
 
     return room;
   }
@@ -79,7 +98,7 @@ class RoomManager implements IRoomManager {
 
     newMessageList.push(message);
 
-    const result = await this.RoomRepository.update({ id, update: { messages: newMessageList } });
+    const result = await this.RoomRepository.update({ id, update: { messages: newMessageList as MessageBody[] } as RoomBody });
 
     if (!result) throw new Error('Error to send message');
 
@@ -109,7 +128,12 @@ class RoomManager implements IRoomManager {
     if (!user) throw new Error('User not found');
 
     const newMembersList = room.members.map(member => ({
-      user: member.user.id
+      user: member.user?.id!
+    }));
+
+    const newRoomsList = user.rooms.map(item => ({
+      room: item.room?.id,
+      isOwner: item.isOwner
     }));
 
     const userIsInList = newMembersList.some(member => member.user === user.id);
@@ -118,7 +142,12 @@ class RoomManager implements IRoomManager {
 
     newMembersList.push({ user: user.id });
 
-    const result = await this.RoomRepository.update({ id: rid, update: { members: newMembersList } });
+    newRoomsList.push({ room: room.id, isOwner: false });
+
+    const result = (async () => {
+      await this.RoomRepository.update({ id: rid, update: { members: newMembersList } as RoomBody });
+      await this.UserRepository.update({ id: uid, update: { rooms: newRoomsList } });
+    })();
 
     if (!result) throw new Error('Error to insert member');
 
