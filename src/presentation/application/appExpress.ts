@@ -10,7 +10,7 @@ import errorHandler from '../middlewares/errorHandler';
 
 class AppExpress implements IApplication {
   private app = express();
-  private PORT = process.env.NODE_PORT;
+  private PORT = process.env.PORT || 8080;
 
   init() {
     this.app.use(cors());
@@ -30,7 +30,7 @@ class AppExpress implements IApplication {
   }
 
   listen() {
-    return this.app.listen(+this.PORT!, '0.0.0.0', () => {
+    return this.app.listen(+this.PORT, '0.0.0.0', () => {
       console.log(`Server running on port ${this.PORT}`);
     });
   }
