@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import container from '../../container';
 
 import roomAddMessageSchema from '../validations/room/roomAddMessageValidation';
@@ -11,6 +9,7 @@ import type IRoomRepository from '../../data/repositores/interfaces/roomReposito
 import type { MessageBody, MessageUpdateBodyPayload, RoomBody, RoomBodyPayload, RoomUpdateBodyPayload } from '../../shared/types/room';
 import type IRoomManager from './interfaces/roomManagerInterface';
 import type IUserRepository from '../../data/repositores/interfaces/userRepositoryInterface';
+import { User } from '../entities/user';
 
 class RoomManager implements IRoomManager {
   private RoomRepository: IRoomRepository = container.resolve('RoomRepository');
@@ -42,13 +41,12 @@ class RoomManager implements IRoomManager {
     if (!room) throw new Error('Room not found');
 
     if (room.owner) {
-      console.log(room.owner);
-      const user = await this.UserRepository.findOne(room.owner.id);
+      const user = await this.UserRepository.findOne(room.owner);
 
       if (!user) throw new Error('User not found');
 
       const newRoomsList = user.rooms.map(item => ({
-        room: item.room?.id,
+        room: item.room,
         isOwner: item.isOwner
       }));
 
@@ -93,26 +91,16 @@ class RoomManager implements IRoomManager {
       id: item.id,
       text: item.text,
       date: item.date,
-      user: item.user?.id
+      user: (item.user as User).id
     }));
 
-    newMessageList.push(message);
+    (newMessageList as MessageBody[]).push(message as MessageBody);
 
     const result = await this.RoomRepository.update({ id, update: { messages: newMessageList as MessageBody[] } as RoomBody });
 
     if (!result) throw new Error('Error to send message');
 
     return result;
-  }
-
-  public async listMessages(id: string) {
-    const rid = await idSchema.parseAsync(id);
-
-    const room = await this.RoomRepository.findOne(rid);
-
-    if (!room) throw new Error('Room not found');
-
-    return room.messages;
   }
 
   public async insertMember(data: { rid: string; uid: string }) {
@@ -128,15 +116,15 @@ class RoomManager implements IRoomManager {
     if (!user) throw new Error('User not found');
 
     const newMembersList = room.members.map(member => ({
-      user: member.user?.id!
+      user: (member.user as User).id!
     }));
 
     const newRoomsList = user.rooms.map(item => ({
-      room: item.room?.id,
+      room: item.room,
       isOwner: item.isOwner
     }));
 
-    const userIsInList = newMembersList.some(member => member.user === user.id);
+    const userIsInList = newMembersList.find(member => member.user === user.id);
 
     if (userIsInList) throw new Error('User is already in the room');
 

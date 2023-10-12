@@ -7,9 +7,9 @@ export interface RoomProps {
   topics: string[];
   messages: Message[];
   members: {
-    user: User | null;
+    user: User | string | null;
   }[];
-  owner: User | null;
+  owner: string | null;
   isPrivate: boolean;
   password: string | null;
 }
@@ -20,9 +20,9 @@ export class Room {
   public topics: string[];
   public messages: Message[];
   public members: {
-    user: User | null;
+    user: User | string | null;
   }[];
-  public owner: User | null;
+  public owner: string | null;
   public isPrivate: boolean;
   public password: string | null;
 

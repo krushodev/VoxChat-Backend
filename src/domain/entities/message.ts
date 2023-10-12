@@ -3,14 +3,14 @@ import type { User } from './user';
 export interface MessageProps {
   id: string;
   text: string;
-  user: User | null;
+  user: User | string | null;
   date: Date;
 }
 
 export class Message {
   public id: string;
   public text: string;
-  public user: User | null;
+  public user: User | string | null;
   public date: Date;
 
   constructor(props: MessageProps) {

@@ -1,6 +1,5 @@
 import SessionManager from '../../domain/managers/sessionManager';
 
-import type { RequestWithUser } from '../../types';
 import type { NextFunction, Request, Response } from 'express';
 
 class SessionController {
@@ -8,7 +7,7 @@ class SessionController {
     try {
       const manager = new SessionManager();
       const { accessToken, refreshToken } = await manager.login(req.body);
-      res.status(200).send({ status: 'success', message: 'Te has logueado correctamente', payload: { accessToken, refreshToken } });
+      res.status(200).send({ status: 'success', message: 'Inicio de sesión exitoso', payload: { accessToken, refreshToken } });
     } catch (err) {
       next(err);
     }
@@ -18,16 +17,7 @@ class SessionController {
     try {
       const manager = new SessionManager();
       await manager.signup(req.body);
-      res.status(201).send({ status: 'success', message: 'Te has registrado correctamente' });
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  public static async private(req: RequestWithUser, res: Response, next: NextFunction) {
-    try {
-      const { user } = req;
-      res.status(200).send({ status: 'success', payload: user });
+      res.status(201).send({ status: 'success', message: 'Registro exitoso' });
     } catch (err) {
       next(err);
     }
@@ -38,7 +28,7 @@ class SessionController {
       const { refreshToken } = req.body;
       const manager = new SessionManager();
       const accessToken = await manager.resolveRefreshToken(refreshToken);
-      res.status(200).send({ status: 'success', message: 'Has renovado tu refresh token', payload: { accessToken } });
+      res.status(200).send({ status: 'success', message: 'Refresh token resuelto correctamente', payload: { accessToken } });
     } catch (err) {
       next(err);
     }
@@ -49,7 +39,7 @@ class SessionController {
       const { id } = req.params;
       const manager = new SessionManager();
       await manager.updateImage({ id, ...req.body });
-      res.status(200).send({ status: 'success', message: 'Imagen de perfil actualizada correctamente' });
+      res.status(200).send({ status: 'success', message: 'Imagen actualizada correctamente' });
     } catch (err) {
       next(err);
     }

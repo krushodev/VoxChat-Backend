@@ -30,7 +30,7 @@ class RoomMongooseRespository implements IRoomRepository {
                     date: message.date
                   })
               ),
-              owner: roomDoc.owner ? new User(roomDoc.owner as unknown as UserProps) : null,
+              owner: roomDoc.owner,
               isPrivate: roomDoc.isPrivate,
               password: roomDoc.password
             })
@@ -58,7 +58,7 @@ class RoomMongooseRespository implements IRoomRepository {
                 date: message.date
               })
           ),
-          owner: roomDoc.owner ? new User(roomDoc.owner as unknown as UserProps) : null,
+          owner: roomDoc.owner,
           isPrivate: roomDoc.isPrivate,
           password: roomDoc.password
         })
@@ -75,18 +75,18 @@ class RoomMongooseRespository implements IRoomRepository {
           name: roomDoc.name,
           topics: roomDoc.topics,
           members: roomDoc.members.map(member => ({
-            user: member.user ? new User(member.user as unknown as UserProps) : null
+            user: member.user ? member.user : null
           })),
           messages: roomDoc.messages.map(
             message =>
               new Message({
                 id: message._id,
                 text: message.text,
-                user: message.user ? new User(message.user as unknown as UserProps) : null,
+                user: message.user ? message.user : null,
                 date: message.date
               })
           ),
-          owner: roomDoc.owner ? new User(roomDoc.owner as unknown as UserProps) : null,
+          owner: roomDoc.owner,
           isPrivate: roomDoc.isPrivate,
           password: roomDoc.password
         })
@@ -104,18 +104,18 @@ class RoomMongooseRespository implements IRoomRepository {
           name: roomDoc.name,
           topics: roomDoc.topics,
           members: roomDoc.members.map(member => ({
-            user: member.user ? new User(member.user as unknown as UserProps) : null
+            user: member.user ? member.user : null
           })),
           messages: roomDoc.messages.map(
             message =>
               new Message({
                 id: message._id,
                 text: message.text,
-                user: message.user ? new User(message.user as unknown as UserProps) : null,
+                user: message.user ? message.user : null,
                 date: message.date
               })
           ),
-          owner: roomDoc.owner ? new User(roomDoc.owner as unknown as UserProps) : null,
+          owner: roomDoc.owner,
           isPrivate: roomDoc.isPrivate,
           password: roomDoc.password
         })

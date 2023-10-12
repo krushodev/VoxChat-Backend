@@ -33,15 +33,15 @@ class SessionManager implements ISessionManager {
   }
 
   public async signup(data: UserBodyPayload) {
-    const { password, email } = await userBodySchema.parseAsync(data);
+    const dataValidated = await userBodySchema.parseAsync(data);
 
-    const userExists = await this.userRepository.findOneByEmail(email);
+    const userExists = await this.userRepository.findOneByEmail(dataValidated.email);
 
     if (userExists) throw new Error('User already exists');
 
-    const hashedPassword = await generateHash(password);
+    const hashedPassword = await generateHash(dataValidated.password);
 
-    await this.userRepository.saveOne({ ...data, password: hashedPassword } as UserBody);
+    await this.userRepository.saveOne({ ...dataValidated, password: hashedPassword });
 
     return true;
   }

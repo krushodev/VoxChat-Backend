@@ -28,7 +28,7 @@ class UserController {
     try {
       const manager = new UserManager();
       const result = await manager.createOne(req.body);
-      res.status(201).send({ status: 'success', payload: result, message: 'Usurio creado correctamente' });
+      res.status(201).send({ status: 'success', payload: result, message: 'Usuario creado correctamente' });
     } catch (err) {
       next(err);
     }

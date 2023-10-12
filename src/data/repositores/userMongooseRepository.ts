@@ -1,7 +1,6 @@
 import UserModel from '../models/userModel';
 
 import { User } from '../../domain/entities/user';
-import { Room, type RoomProps } from '../../domain/entities/room';
 
 import type IUserRepository from './interfaces/userRepositoryInterface';
 
@@ -19,7 +18,8 @@ class UserMongooseRespository implements IUserRepository {
               image: userDoc.image,
               password: userDoc.password,
               rooms: userDoc.rooms.map(item => ({
-                room: item.room ? new Room(item.room as unknown as RoomProps) : null,
+                id: item._id,
+                room: item.room,
                 isOwner: item.isOwner
               }))
             })
@@ -38,7 +38,8 @@ class UserMongooseRespository implements IUserRepository {
           image: userDoc.image,
           password: userDoc.password,
           rooms: userDoc.rooms.map(item => ({
-            room: item.room ? new Room(item.room as unknown as RoomProps) : null,
+            id: item._id,
+            room: item.room,
             isOwner: item.isOwner
           }))
         })
@@ -56,7 +57,8 @@ class UserMongooseRespository implements IUserRepository {
           image: userDoc.image,
           password: userDoc.password,
           rooms: userDoc.rooms.map(item => ({
-            room: item.room ? new Room(item.room as unknown as RoomProps) : null,
+            id: item._id,
+            room: item.room,
             isOwner: item.isOwner
           }))
         })
@@ -75,7 +77,8 @@ class UserMongooseRespository implements IUserRepository {
           image: userDoc.image,
           password: userDoc.password,
           rooms: userDoc.rooms.map(item => ({
-            room: item.room ? new Room(item.room as unknown as RoomProps) : null,
+            id: item._id,
+            room: item.room,
             isOwner: item.isOwner
           }))
         })
@@ -95,7 +98,8 @@ class UserMongooseRespository implements IUserRepository {
           image: userDoc.image,
           password: userDoc.password,
           rooms: userDoc.rooms.map(item => ({
-            room: item.room ? new Room(item.room as unknown as RoomProps) : null,
+            id: item._id,
+            room: item.room,
             isOwner: item.isOwner
           }))
         })

@@ -67,23 +67,12 @@ class RoomController {
     }
   }
 
-  public static async getMessages(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
-      const manager = new RoomManager();
-      const result = await manager.listMessages(id);
-      res.status(201).send({ status: 'success', payload: result });
-    } catch (err) {
-      next(err);
-    }
-  }
-
   public static async addMember(req: Request, res: Response, next: NextFunction) {
     try {
       const { rid, uid } = req.params;
       const manager = new RoomManager();
       await manager.insertMember({ rid, uid });
-      res.status(200).send({ status: 'success', message: 'Usuario incorporado correctamente' });
+      res.status(200).send({ status: 'success', message: 'Usuario añadido correctamente' });
     } catch (err) {
       next(err);
     }

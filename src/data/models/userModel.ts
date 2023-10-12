@@ -1,4 +1,4 @@
-import { Schema, SchemaType, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { randomUUID } from 'crypto';
 
 const usersCollection = 'users';
@@ -26,10 +26,12 @@ const userSchema = new Schema({
   },
   rooms: [
     {
+      _id: {
+        type: Schema.Types.String,
+        default: randomUUID
+      },
       room: {
         type: Schema.Types.String,
-        index: true,
-        ref: 'rooms',
         required: true
       },
       isOwner: {
@@ -38,10 +40,6 @@ const userSchema = new Schema({
       }
     }
   ]
-});
-
-userSchema.pre('find', function () {
-  this.populate('rooms.room');
 });
 
 export default model(usersCollection, userSchema);
