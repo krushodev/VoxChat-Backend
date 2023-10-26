@@ -96,7 +96,9 @@ class RoomManager implements IRoomManager {
 
     (newMessageList as MessageBody[]).push(message as MessageBody);
 
-    const result = await this.RoomRepository.update({ id, update: { messages: newMessageList as MessageBody[] } as RoomBody });
+    const update = await this.RoomRepository.update({ id, update: { messages: newMessageList as MessageBody[] } as RoomBody });
+
+    const result = update?.messages.find(item => item.id === message.id);
 
     if (!result) throw new Error('Error to send message');
 
