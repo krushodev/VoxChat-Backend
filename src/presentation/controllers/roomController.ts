@@ -60,8 +60,8 @@ class RoomController {
     try {
       const { id } = req.params;
       const manager = new RoomManager();
-      await manager.insertMessage({ id, message: req.body });
-      res.status(201).send({ status: 'success', message: 'Mensaje enviado correctamente' });
+      const result = await manager.insertMessage({ id, message: req.body });
+      res.status(201).send({ status: 'success', message: 'Mensaje enviado correctamente', payload: result });
     } catch (err) {
       next(err);
     }
