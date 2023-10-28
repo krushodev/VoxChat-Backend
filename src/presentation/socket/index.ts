@@ -1,37 +1,38 @@
 import { Server as ServerType } from 'http';
 import { Server } from 'socket.io';
 
-import type { MessageBody } from '../../shared/types/room';
+import type { MessageBody, RoomBody } from '../../shared/types/room';
 
 const createSocketServer = (server: ServerType) => {
-  let connectedUsers: string[] = [];
-
   const socketServer = new Server(server!, {
     cors: {
       origin: '*'
     }
   });
 
+  const connectedUsers: Set<string> = new Set();
+
   socketServer.on('connection', socket => {
     socket.on('sendMessage', (data: MessageBody) => {
       socket.broadcast.emit('updateMessages', data);
     });
-    socket.on('createRoom', data => {
+    socket.on('createRoom', (data: RoomBody) => {
       socket.broadcast.emit('updateRooms', data);
     });
 
-    socket.on('saveConnection', data => {
-      connectedUsers.push(data);
-      socketServer.emit('updateConnections', connectedUsers);
+    socket.on('saveConnection', (id: string) => {
+      connectedUsers.add(id);
+      console.log(connectedUsers);
+      socketServer.emit('updateConnections', Array.from(connectedUsers));
     });
 
-    socket.on('removeConnection', data => {
-      connectedUsers = connectedUsers.filter(id => id !== data);
-      socket.broadcast.emit('updateConnections', connectedUsers);
+    socket.on('removeConnection', id => {
+      connectedUsers.delete(id);
+      socket.broadcast.emit('updateConnections', Array.from(connectedUsers));
     });
 
     socket.on('getConnections', callback => {
-      callback(connectedUsers);
+      callback(Array.from(connectedUsers));
     });
   });
 };
