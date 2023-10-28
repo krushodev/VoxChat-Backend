@@ -22,7 +22,6 @@ const createSocketServer = (server: ServerType) => {
 
     socket.on('saveConnection', (id: string) => {
       connectedUsers.add(id);
-      console.log(connectedUsers);
       socketServer.emit('updateConnections', Array.from(connectedUsers));
     });
 
