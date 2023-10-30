@@ -73,6 +73,22 @@ class RoomManager implements IRoomManager {
   public async removeOne(id: string) {
     const rid = await idSchema.parseAsync(id);
 
+    const room = await this.RoomRepository.findOne(rid);
+
+    if (!room) throw new Error('Room not found');
+
+    for (const member of room.members) {
+      if (!member.user) continue;
+
+      const user = await this.UserRepository.findOne(typeof member.user === 'string' ? member.user : member.user?.id);
+
+      if (!user) continue;
+
+      const updatedRooms = user.rooms.filter(item => item.room !== rid);
+
+      await this.UserRepository.update({ id: user.id, update: { rooms: updatedRooms } });
+    }
+
     const result = await this.RoomRepository.delete(rid);
 
     if (!result) throw new Error('Room not found');
@@ -143,7 +159,42 @@ class RoomManager implements IRoomManager {
 
     if (!result) throw new Error('Error to insert member');
 
-    return result;
+    return true;
+  }
+
+  public async removeMember(data: { rid: string; uid: string }) {
+    const rid = await idSchema.parseAsync(data.rid);
+    const uid = await idSchema.parseAsync(data.uid);
+
+    const room = await this.RoomRepository.findOne(rid);
+
+    if (!room) throw new Error('Room not found');
+
+    const user = await this.UserRepository.findOne(uid);
+
+    if (!user) throw new Error('User not found');
+
+    const membersList = room.members.map(member => ({
+      user: (member.user as User).id!
+    }));
+
+    const roomsList = user.rooms.map(item => ({
+      room: item.room,
+      isOwner: item.isOwner
+    }));
+
+    const newMembersList = membersList.filter(item => item.user !== uid);
+
+    const newRoomsList = roomsList.filter(item => item.room !== rid);
+
+    const result = (async () => {
+      await this.RoomRepository.update({ id: rid, update: { members: newMembersList } as RoomBody });
+      await this.UserRepository.update({ id: uid, update: { rooms: newRoomsList } });
+    })();
+
+    if (!result) throw new Error('Error to remove member');
+
+    return true;
   }
 }
 

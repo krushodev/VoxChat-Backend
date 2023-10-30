@@ -16,8 +16,17 @@ const createSocketServer = (server: ServerType) => {
     socket.on('sendMessage', (data: MessageBody) => {
       socket.broadcast.emit('updateMessages', data);
     });
+
     socket.on('createRoom', (data: RoomBody) => {
       socket.broadcast.emit('updateRooms', data);
+    });
+
+    socket.on('updateMembers', (data: RoomBody) => {
+      socket.broadcast.emit('updateRoom', data);
+    });
+
+    socket.on('removeRoom', (id: string) => {
+      socket.broadcast.emit('updateRooms', id);
     });
 
     socket.on('saveConnection', (id: string) => {

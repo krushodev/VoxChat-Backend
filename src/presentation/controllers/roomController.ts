@@ -77,6 +77,18 @@ class RoomController {
       next(err);
     }
   }
+
+  public static async removeMember(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { rid, uid } = req.params;
+      const manager = new RoomManager();
+      await manager.removeMember({ rid, uid });
+      res.status(200).send({ status: 'success', message: 'Usuario removido correctamente' });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
 }
 
 export default RoomController;

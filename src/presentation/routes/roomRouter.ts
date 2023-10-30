@@ -9,6 +9,7 @@ roomRouter.get('/:id', RoomController.getOne);
 roomRouter.post('/', RoomController.createOne);
 roomRouter.post('/:id/messages', RoomController.sendMessage);
 roomRouter.post('/:rid/add-member/:uid', RoomController.addMember);
+roomRouter.post('/:rid/remove-member/:uid', RoomController.removeMember);
 roomRouter.put('/:id', RoomController.updateOne);
 roomRouter.delete('/:id', RoomController.removeOne);
 

@@ -9,6 +9,8 @@ interface IRoomManager {
   updateOne: (data: RoomUpdateBodyPayload) => Promise<Room>;
   removeOne: (id: string) => Promise<boolean>;
   insertMessage: (data: MessageUpdateBodyPayload) => Promise<Message>;
+  insertMember: (data: { rid: string; uid: string }) => Promise<boolean>;
+  removeMember: (data: { rid: string; uid: string }) => Promise<boolean>;
 }
 
 export default IRoomManager;
