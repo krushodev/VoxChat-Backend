@@ -1,12 +1,12 @@
 {
   "name": "voxtalk-backend",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "author": "Ignacio Kruchowski",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/index.js",
+    "start": "node dist/index.js",
     "dev": "nodemon src/index.ts"
   },
   "dependencies": {
